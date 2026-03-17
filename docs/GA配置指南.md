@@ -17,7 +17,7 @@
 1. 登录 [Google Analytics](https://analytics.google.com/)
 2. 左下角点击 **管理**（齿轮图标）
 3. 在 **属性** 列中，点击 **属性设置 → 属性详情**
-4. 复制 **属性 ID**（纯数字，如 `485215519`）
+4. 复制 **属性 ID**（纯数字，如 `123456789`）
 
 > 注意：需要的是纯数字的属性 ID，不是 `G-XXXXXXX` 格式的衡量 ID。
 
@@ -88,7 +88,7 @@ config/ga_credentials.json
 ```json
 {
   "ga": {
-    "property_id": "485215519"
+    "property_id": "123456789"
   },
   "google_analytics": {
     "enabled": true,
@@ -105,7 +105,7 @@ config/ga_credentials.json
 
 | 字段 | 说明 | 示例 |
 |------|------|------|
-| `ga.property_id` | GA4 属性 ID（纯数字） | `485215519` |
+| `ga.property_id` | GA4 属性 ID（纯数字） | `123456789` |
 | `google_analytics.credentials_file` | 服务账号密钥文件路径 | `config/ga_credentials.json` |
 | `measurement_id` | GA4 衡量 ID（可选，用于 Measurement Protocol） | `G-ABC123XYZ` |
 | `api_secret` | Measurement Protocol API 密钥（可选） | 在 GA4 管理后台生成 |

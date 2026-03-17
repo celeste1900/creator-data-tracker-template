@@ -24,7 +24,7 @@
     "cookie_expires_hint": 7
   },
   "ga": {
-    "property_id": "你的GA属性ID（纯数字，如485215519）"
+    "property_id": "你的GA属性ID（纯数字，如123456789）"
   },
   "google_analytics": {
     "enabled": true,

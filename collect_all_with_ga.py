@@ -41,7 +41,7 @@ def get_platform_timestamps() -> dict:
         try:
             with open(ALL_DATA_FILE, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            for p in ["douyin", "xiaohongshu", "shipinhao", "gongzhonghao"]:
+            for p in ["douyin", "xiaohongshu", "shipinhao"]:
                 ts = data.get(p, {}).get("account", {}).get("last_updated")
                 if ts:
                     result[p] = ts

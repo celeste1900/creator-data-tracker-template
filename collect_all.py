@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 创作者数据采集工具
-支持：抖音、小红书、视频号、公众号
+支持：抖音、小红书、视频号
 
 使用方法：
   python collect_all.py              # 采集所有平台
@@ -127,7 +127,7 @@ def save_frontend_json():
             log(f"⚠️ 合并 orders_data.json 失败: {e}")
 
     # 保护平台 account 数据：若旧 JSON 里的 last_updated 比 DB 更新，保留旧数据
-    for platform in ["douyin", "xiaohongshu", "shipinhao", "gongzhonghao"]:
+    for platform in ["douyin", "xiaohongshu", "shipinhao"]:
         old_platform = old_data.get(platform, {})
         new_platform = data.get(platform, {})
         if not old_platform or not new_platform:

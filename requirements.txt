@@ -1,3 +1,4 @@
 requests>=2.28.0
 playwright>=1.40.0  # 会话保持功能需要
 browser-cookie3>=0.19.0  # 从浏览器读取Cookie
+google-analytics-data>=0.18.0  # GA4 数据采集

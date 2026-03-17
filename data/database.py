@@ -434,7 +434,7 @@ def get_stats_summary():
 
     result = {}
 
-    for platform in ["douyin", "xiaohongshu", "shipinhao", "gongzhonghao"]:
+    for platform in ["douyin", "xiaohongshu", "shipinhao"]:
         # 获取今日数据
         cursor.execute("""
             SELECT * FROM daily_accounts
@@ -528,7 +528,7 @@ def export_for_frontend():
     data["daily_snapshots"].sort(key=lambda x: (x["date"], x["platform"]), reverse=True)
 
     # 一次性获取各平台最新数据
-    for platform in ["douyin", "xiaohongshu", "shipinhao", "gongzhonghao"]:
+    for platform in ["douyin", "xiaohongshu", "shipinhao"]:
         cursor.execute("""
             SELECT * FROM daily_accounts
             WHERE platform = ?
@@ -603,7 +603,7 @@ def migrate_from_json(json_data):
         ))
 
     # 迁移各平台数据
-    for platform in ["douyin", "xiaohongshu", "shipinhao", "gongzhonghao"]:
+    for platform in ["douyin", "xiaohongshu", "shipinhao"]:
         platform_data = json_data.get(platform, {})
 
         # 更新账号信息到最新记录

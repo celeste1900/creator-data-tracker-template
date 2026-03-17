@@ -1026,8 +1026,7 @@
         const platformConfig = {
             douyin: { name: '抖音', icon: 'assets/抖音.png', color: '#fe2c55' },
             xiaohongshu: { name: '小红书', icon: 'assets/小红书.png', color: '#ff2442' },
-            shipinhao: { name: '视频号', icon: 'assets/视频号.jpeg', color: '#fa9d3b' },
-            gongzhonghao: { name: '公众号', icon: 'assets/公众号.png', color: '#07c160' }
+            shipinhao: { name: '视频号', icon: 'assets/视频号.jpeg', color: '#fa9d3b' }
         };
 
         // 格式化数字
@@ -1214,19 +1213,15 @@
                 const card = document.createElement('div');
                 card.className = 'platform-card';
 
-                // 检查是否是公众号且数据未开通（粉丝和阅读都是0）
-                const isGzhPending = platform === 'gongzhonghao' && data && data.account &&
-                    data.account.followers === 0 && data.account.total_views === 0;
-
-                if (!data || !data.account || isGzhPending) {
-                    // 未接入或待开通的平台
-                    const statusText = isGzhPending ? '待开通数据采集' : '待接入';
+                if (!data || !data.account) {
+                    // 未接入的平台
+                    const statusText = '待接入';
                     card.innerHTML = `
                         <div class="platform-header">
                             <div class="platform-icon"><img src="${config.icon}" alt="${config.name}"></div>
                             <div class="platform-info">
                                 <div class="platform-name">${config.name}</div>
-                                <div class="platform-account">${isGzhPending ? (data.account.account_name || '-') : '待接入'}</div>
+                                <div class="platform-account">待接入</div>
                             </div>
                             <span class="platform-status pending">${statusText}</span>
                         </div>

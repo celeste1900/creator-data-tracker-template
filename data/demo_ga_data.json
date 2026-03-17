@@ -20,97 +20,1322 @@
     "avg_session_duration": 178.8
   },
   "daily_trend": [
-    {"date": "2026-02-15", "active_users": 310, "sessions": 455, "page_views": 1420},
-    {"date": "2026-02-16", "active_users": 420, "sessions": 625, "page_views": 1960},
-    {"date": "2026-02-17", "active_users": 385, "sessions": 570, "page_views": 1780},
-    {"date": "2026-02-18", "active_users": 450, "sessions": 668, "page_views": 2090},
-    {"date": "2026-02-19", "active_users": 468, "sessions": 695, "page_views": 2180},
-    {"date": "2026-02-20", "active_users": 430, "sessions": 640, "page_views": 2000},
-    {"date": "2026-02-21", "active_users": 280, "sessions": 415, "page_views": 1300},
-    {"date": "2026-02-22", "active_users": 295, "sessions": 438, "page_views": 1370},
-    {"date": "2026-02-23", "active_users": 465, "sessions": 692, "page_views": 2165},
-    {"date": "2026-02-24", "active_users": 440, "sessions": 655, "page_views": 2050},
-    {"date": "2026-02-25", "active_users": 425, "sessions": 632, "page_views": 1980},
-    {"date": "2026-02-26", "active_users": 478, "sessions": 710, "page_views": 2220},
-    {"date": "2026-02-27", "active_users": 412, "sessions": 612, "page_views": 1915},
-    {"date": "2026-02-28", "active_users": 275, "sessions": 408, "page_views": 1280},
-    {"date": "2026-03-01", "active_users": 290, "sessions": 432, "page_views": 1350},
-    {"date": "2026-03-02", "active_users": 485, "sessions": 722, "page_views": 2260},
-    {"date": "2026-03-03", "active_users": 455, "sessions": 678, "page_views": 2120},
-    {"date": "2026-03-04", "active_users": 418, "sessions": 622, "page_views": 1945},
-    {"date": "2026-03-05", "active_users": 472, "sessions": 702, "page_views": 2198},
-    {"date": "2026-03-06", "active_users": 445, "sessions": 662, "page_views": 2072},
-    {"date": "2026-03-07", "active_users": 282, "sessions": 420, "page_views": 1315},
-    {"date": "2026-03-08", "active_users": 305, "sessions": 454, "page_views": 1420},
-    {"date": "2026-03-09", "active_users": 492, "sessions": 732, "page_views": 2290},
-    {"date": "2026-03-10", "active_users": 460, "sessions": 685, "page_views": 2142},
-    {"date": "2026-03-11", "active_users": 435, "sessions": 648, "page_views": 2028},
-    {"date": "2026-03-12", "active_users": 480, "sessions": 715, "page_views": 2238},
-    {"date": "2026-03-13", "active_users": 420, "sessions": 625, "page_views": 1955},
-    {"date": "2026-03-14", "active_users": 270, "sessions": 402, "page_views": 1258},
-    {"date": "2026-03-15", "active_users": 298, "sessions": 443, "page_views": 1388},
-    {"date": "2026-03-16", "active_users": 400, "sessions": 595, "page_views": 1862},
-    {"date": "2026-03-17", "active_users": 425, "sessions": 618, "page_views": 1890}
+    {
+      "date": "2026-02-15",
+      "active_users": 310,
+      "sessions": 455,
+      "page_views": 1420
+    },
+    {
+      "date": "2026-02-16",
+      "active_users": 420,
+      "sessions": 625,
+      "page_views": 1960
+    },
+    {
+      "date": "2026-02-17",
+      "active_users": 385,
+      "sessions": 570,
+      "page_views": 1780
+    },
+    {
+      "date": "2026-02-18",
+      "active_users": 450,
+      "sessions": 668,
+      "page_views": 2090
+    },
+    {
+      "date": "2026-02-19",
+      "active_users": 468,
+      "sessions": 695,
+      "page_views": 2180
+    },
+    {
+      "date": "2026-02-20",
+      "active_users": 430,
+      "sessions": 640,
+      "page_views": 2000
+    },
+    {
+      "date": "2026-02-21",
+      "active_users": 280,
+      "sessions": 415,
+      "page_views": 1300
+    },
+    {
+      "date": "2026-02-22",
+      "active_users": 295,
+      "sessions": 438,
+      "page_views": 1370
+    },
+    {
+      "date": "2026-02-23",
+      "active_users": 465,
+      "sessions": 692,
+      "page_views": 2165
+    },
+    {
+      "date": "2026-02-24",
+      "active_users": 440,
+      "sessions": 655,
+      "page_views": 2050
+    },
+    {
+      "date": "2026-02-25",
+      "active_users": 425,
+      "sessions": 632,
+      "page_views": 1980
+    },
+    {
+      "date": "2026-02-26",
+      "active_users": 478,
+      "sessions": 710,
+      "page_views": 2220
+    },
+    {
+      "date": "2026-02-27",
+      "active_users": 412,
+      "sessions": 612,
+      "page_views": 1915
+    },
+    {
+      "date": "2026-02-28",
+      "active_users": 275,
+      "sessions": 408,
+      "page_views": 1280
+    },
+    {
+      "date": "2026-03-01",
+      "active_users": 290,
+      "sessions": 432,
+      "page_views": 1350
+    },
+    {
+      "date": "2026-03-02",
+      "active_users": 485,
+      "sessions": 722,
+      "page_views": 2260
+    },
+    {
+      "date": "2026-03-03",
+      "active_users": 455,
+      "sessions": 678,
+      "page_views": 2120
+    },
+    {
+      "date": "2026-03-04",
+      "active_users": 418,
+      "sessions": 622,
+      "page_views": 1945
+    },
+    {
+      "date": "2026-03-05",
+      "active_users": 472,
+      "sessions": 702,
+      "page_views": 2198
+    },
+    {
+      "date": "2026-03-06",
+      "active_users": 445,
+      "sessions": 662,
+      "page_views": 2072
+    },
+    {
+      "date": "2026-03-07",
+      "active_users": 282,
+      "sessions": 420,
+      "page_views": 1315
+    },
+    {
+      "date": "2026-03-08",
+      "active_users": 305,
+      "sessions": 454,
+      "page_views": 1420
+    },
+    {
+      "date": "2026-03-09",
+      "active_users": 492,
+      "sessions": 732,
+      "page_views": 2290
+    },
+    {
+      "date": "2026-03-10",
+      "active_users": 460,
+      "sessions": 685,
+      "page_views": 2142
+    },
+    {
+      "date": "2026-03-11",
+      "active_users": 435,
+      "sessions": 648,
+      "page_views": 2028
+    },
+    {
+      "date": "2026-03-12",
+      "active_users": 480,
+      "sessions": 715,
+      "page_views": 2238
+    },
+    {
+      "date": "2026-03-13",
+      "active_users": 420,
+      "sessions": 625,
+      "page_views": 1955
+    },
+    {
+      "date": "2026-03-14",
+      "active_users": 270,
+      "sessions": 402,
+      "page_views": 1258
+    },
+    {
+      "date": "2026-03-15",
+      "active_users": 298,
+      "sessions": 443,
+      "page_views": 1388
+    },
+    {
+      "date": "2026-03-16",
+      "active_users": 400,
+      "sessions": 595,
+      "page_views": 1862
+    },
+    {
+      "date": "2026-03-17",
+      "active_users": 425,
+      "sessions": 618,
+      "page_views": 1890
+    }
   ],
   "traffic_sources": [
-    {"source": "google / organic", "sessions": 1498},
-    {"source": "(direct) / (none)", "sessions": 1070},
-    {"source": "weixin / social", "sessions": 770},
-    {"source": "douyin / social", "sessions": 514},
-    {"source": "xiaohongshu / social", "sessions": 257},
-    {"source": "baidu / organic", "sessions": 171}
+    {
+      "source": "google / organic",
+      "sessions": 1498
+    },
+    {
+      "source": "(direct) / (none)",
+      "sessions": 1070
+    },
+    {
+      "source": "weixin / social",
+      "sessions": 770
+    },
+    {
+      "source": "douyin / social",
+      "sessions": 514
+    },
+    {
+      "source": "xiaohongshu / social",
+      "sessions": 257
+    },
+    {
+      "source": "baidu / organic",
+      "sessions": 171
+    }
   ],
   "top_pages": [
-    {"page": "/", "views": 4200, "users": 2800},
-    {"page": "/products", "views": 2800, "users": 1900},
-    {"page": "/about", "views": 1500, "users": 1100},
-    {"page": "/blog/coffee-guide", "views": 1200, "users": 900},
-    {"page": "/pricing", "views": 980, "users": 750},
-    {"page": "/blog/latte-art", "views": 850, "users": 620},
-    {"page": "/contact", "views": 600, "users": 450}
+    {
+      "page": "/",
+      "views": 4200,
+      "users": 2800
+    },
+    {
+      "page": "/products",
+      "views": 2800,
+      "users": 1900
+    },
+    {
+      "page": "/about",
+      "views": 1500,
+      "users": 1100
+    },
+    {
+      "page": "/blog/coffee-guide",
+      "views": 1200,
+      "users": 900
+    },
+    {
+      "page": "/pricing",
+      "views": 980,
+      "users": 750
+    },
+    {
+      "page": "/blog/latte-art",
+      "views": 850,
+      "users": 620
+    },
+    {
+      "page": "/contact",
+      "views": 600,
+      "users": 450
+    }
   ],
   "devices": [
-    {"device": "mobile", "sessions": 2654},
-    {"device": "desktop", "sessions": 1412},
-    {"device": "tablet", "sessions": 214}
+    {
+      "device": "mobile",
+      "sessions": 2654
+    },
+    {
+      "device": "desktop",
+      "sessions": 1412
+    },
+    {
+      "device": "tablet",
+      "sessions": 214
+    }
   ],
   "operating_systems": [
-    {"os": "iOS", "sessions": 1626},
-    {"os": "Android", "sessions": 1198},
-    {"os": "Windows", "sessions": 856},
-    {"os": "Macintosh", "sessions": 428},
-    {"os": "Linux", "sessions": 172}
+    {
+      "os": "iOS",
+      "sessions": 1626
+    },
+    {
+      "os": "Android",
+      "sessions": 1198
+    },
+    {
+      "os": "Windows",
+      "sessions": 856
+    },
+    {
+      "os": "Macintosh",
+      "sessions": 428
+    },
+    {
+      "os": "Linux",
+      "sessions": 172
+    }
   ],
   "languages": [
-    {"language": "zh-cn", "sessions": 2782},
-    {"language": "en-us", "sessions": 642},
-    {"language": "zh-tw", "sessions": 342},
-    {"language": "ja", "sessions": 257},
-    {"language": "ko", "sessions": 171}
+    {
+      "language": "zh-cn",
+      "sessions": 2782
+    },
+    {
+      "language": "en-us",
+      "sessions": 642
+    },
+    {
+      "language": "zh-tw",
+      "sessions": 342
+    },
+    {
+      "language": "ja",
+      "sessions": 257
+    },
+    {
+      "language": "ko",
+      "sessions": 171
+    }
   ],
   "landing_pages": [
-    {"page": "/", "sessions": 1712},
-    {"page": "/products", "sessions": 856},
-    {"page": "/blog/coffee-guide", "sessions": 642},
-    {"page": "/pricing", "sessions": 428},
-    {"page": "/about", "sessions": 342}
+    {
+      "page": "/",
+      "sessions": 1712
+    },
+    {
+      "page": "/products",
+      "sessions": 856
+    },
+    {
+      "page": "/blog/coffee-guide",
+      "sessions": 642
+    },
+    {
+      "page": "/pricing",
+      "sessions": 428
+    },
+    {
+      "page": "/about",
+      "sessions": 342
+    }
   ],
   "exit_pages": [
-    {"page": "/pricing", "sessions": 1070},
-    {"page": "/contact", "sessions": 770},
-    {"page": "/", "sessions": 642},
-    {"page": "/products", "sessions": 514},
-    {"page": "/blog/coffee-guide", "sessions": 428}
+    {
+      "page": "/pricing",
+      "sessions": 1070
+    },
+    {
+      "page": "/contact",
+      "sessions": 770
+    },
+    {
+      "page": "/",
+      "sessions": 642
+    },
+    {
+      "page": "/products",
+      "sessions": 514
+    },
+    {
+      "page": "/blog/coffee-guide",
+      "sessions": 428
+    }
   ],
   "geo": [
-    {"country": "中国", "sessions": 2996},
-    {"country": "美国", "sessions": 428},
-    {"country": "日本", "sessions": 257},
-    {"country": "中国台湾", "sessions": 214},
-    {"country": "韩国", "sessions": 128}
+    {
+      "country": "中国",
+      "sessions": 2996
+    },
+    {
+      "country": "美国",
+      "sessions": 428
+    },
+    {
+      "country": "日本",
+      "sessions": 257
+    },
+    {
+      "country": "中国台湾",
+      "sessions": 214
+    },
+    {
+      "country": "韩国",
+      "sessions": 128
+    }
   ],
   "real_registrations": {
     "daily": [],
     "recent_events": []
-  }
+  },
+  "segmented_1d": {
+    "frontend": {
+      "users": 161,
+      "views": 623,
+      "sessions": 222,
+      "avg_duration": 145.2,
+      "pages": [
+        {
+          "page": "/",
+          "views": 820,
+          "users": 293
+        },
+        {
+          "page": "/products",
+          "views": 676,
+          "users": 267
+        },
+        {
+          "page": "/pricing",
+          "views": 456,
+          "users": 176
+        },
+        {
+          "page": "/blog/coffee-guide",
+          "views": 317,
+          "users": 107
+        },
+        {
+          "page": "/about",
+          "views": 268,
+          "users": 84
+        }
+      ],
+      "changes": {
+        "views": 74,
+        "users": 12,
+        "sessions": 22
+      }
+    },
+    "backend": {
+      "users": 263,
+      "views": 1266,
+      "sessions": 395,
+      "avg_duration": 218.6,
+      "pages": [
+        {
+          "page": "/dashboard",
+          "views": 1702,
+          "users": 435
+        },
+        {
+          "page": "/orders",
+          "views": 1216,
+          "users": 346
+        },
+        {
+          "page": "/analytics",
+          "views": 958,
+          "users": 314
+        },
+        {
+          "page": "/auth",
+          "views": 514,
+          "users": 260
+        },
+        {
+          "page": "/settings",
+          "views": 409,
+          "users": 196
+        }
+      ],
+      "changes": {
+        "views": 189,
+        "users": 26,
+        "sessions": 47
+      }
+    }
+  },
+  "segmented_7d": {
+    "frontend": {
+      "users": 1083,
+      "views": 4455,
+      "sessions": 1540,
+      "avg_duration": 145.2,
+      "pages": [
+        {
+          "page": "/",
+          "views": 2460,
+          "users": 879
+        },
+        {
+          "page": "/products",
+          "views": 2028,
+          "users": 801
+        },
+        {
+          "page": "/pricing",
+          "views": 1368,
+          "users": 528
+        },
+        {
+          "page": "/blog/coffee-guide",
+          "views": 951,
+          "users": 321
+        },
+        {
+          "page": "/about",
+          "views": 804,
+          "users": 252
+        }
+      ],
+      "changes": {
+        "views": 534,
+        "users": 86,
+        "sessions": 154
+      }
+    },
+    "backend": {
+      "users": 1767,
+      "views": 9045,
+      "sessions": 2739,
+      "avg_duration": 218.6,
+      "pages": [
+        {
+          "page": "/dashboard",
+          "views": 5106,
+          "users": 1305
+        },
+        {
+          "page": "/orders",
+          "views": 3648,
+          "users": 1038
+        },
+        {
+          "page": "/analytics",
+          "views": 2874,
+          "users": 942
+        },
+        {
+          "page": "/auth",
+          "views": 1542,
+          "users": 780
+        },
+        {
+          "page": "/settings",
+          "views": 1227,
+          "users": 588
+        }
+      ],
+      "changes": {
+        "views": 1356,
+        "users": 176,
+        "sessions": 328
+      }
+    }
+  },
+  "segmented_30d": {
+    "frontend": {
+      "users": 4484,
+      "views": 18216,
+      "sessions": 6354,
+      "avg_duration": 145.2,
+      "pages": [
+        {
+          "page": "/",
+          "views": 6560,
+          "users": 2344
+        },
+        {
+          "page": "/products",
+          "views": 5408,
+          "users": 2136
+        },
+        {
+          "page": "/pricing",
+          "views": 3648,
+          "users": 1408
+        },
+        {
+          "page": "/blog/coffee-guide",
+          "views": 2536,
+          "users": 856
+        },
+        {
+          "page": "/about",
+          "views": 2144,
+          "users": 672
+        }
+      ],
+      "changes": {
+        "views": 2185,
+        "users": 358,
+        "sessions": 635
+      }
+    },
+    "backend": {
+      "users": 7316,
+      "views": 36984,
+      "sessions": 11296,
+      "avg_duration": 218.6,
+      "pages": [
+        {
+          "page": "/dashboard",
+          "views": 13616,
+          "users": 3480
+        },
+        {
+          "page": "/orders",
+          "views": 9728,
+          "users": 2768
+        },
+        {
+          "page": "/analytics",
+          "views": 7664,
+          "users": 2512
+        },
+        {
+          "page": "/auth",
+          "views": 4112,
+          "users": 2080
+        },
+        {
+          "page": "/settings",
+          "views": 3272,
+          "users": 1568
+        }
+      ],
+      "changes": {
+        "views": 5547,
+        "users": 731,
+        "sessions": 1355
+      }
+    }
+  },
+  "segmented_trend": [
+    {
+      "date": "2026-02-15",
+      "frontend": 124,
+      "backend": 186
+    },
+    {
+      "date": "2026-02-16",
+      "frontend": 168,
+      "backend": 252
+    },
+    {
+      "date": "2026-02-17",
+      "frontend": 154,
+      "backend": 231
+    },
+    {
+      "date": "2026-02-18",
+      "frontend": 180,
+      "backend": 270
+    },
+    {
+      "date": "2026-02-19",
+      "frontend": 187,
+      "backend": 280
+    },
+    {
+      "date": "2026-02-20",
+      "frontend": 172,
+      "backend": 258
+    },
+    {
+      "date": "2026-02-21",
+      "frontend": 112,
+      "backend": 168
+    },
+    {
+      "date": "2026-02-22",
+      "frontend": 118,
+      "backend": 177
+    },
+    {
+      "date": "2026-02-23",
+      "frontend": 186,
+      "backend": 279
+    },
+    {
+      "date": "2026-02-24",
+      "frontend": 176,
+      "backend": 264
+    },
+    {
+      "date": "2026-02-25",
+      "frontend": 170,
+      "backend": 255
+    },
+    {
+      "date": "2026-02-26",
+      "frontend": 191,
+      "backend": 286
+    },
+    {
+      "date": "2026-02-27",
+      "frontend": 164,
+      "backend": 247
+    },
+    {
+      "date": "2026-02-28",
+      "frontend": 110,
+      "backend": 165
+    },
+    {
+      "date": "2026-03-01",
+      "frontend": 116,
+      "backend": 174
+    },
+    {
+      "date": "2026-03-02",
+      "frontend": 194,
+      "backend": 291
+    },
+    {
+      "date": "2026-03-03",
+      "frontend": 182,
+      "backend": 273
+    },
+    {
+      "date": "2026-03-04",
+      "frontend": 167,
+      "backend": 250
+    },
+    {
+      "date": "2026-03-05",
+      "frontend": 188,
+      "backend": 283
+    },
+    {
+      "date": "2026-03-06",
+      "frontend": 178,
+      "backend": 267
+    },
+    {
+      "date": "2026-03-07",
+      "frontend": 112,
+      "backend": 169
+    },
+    {
+      "date": "2026-03-08",
+      "frontend": 122,
+      "backend": 183
+    },
+    {
+      "date": "2026-03-09",
+      "frontend": 196,
+      "backend": 295
+    },
+    {
+      "date": "2026-03-10",
+      "frontend": 184,
+      "backend": 276
+    },
+    {
+      "date": "2026-03-11",
+      "frontend": 174,
+      "backend": 261
+    },
+    {
+      "date": "2026-03-12",
+      "frontend": 192,
+      "backend": 288
+    },
+    {
+      "date": "2026-03-13",
+      "frontend": 168,
+      "backend": 252
+    },
+    {
+      "date": "2026-03-14",
+      "frontend": 108,
+      "backend": 162
+    },
+    {
+      "date": "2026-03-15",
+      "frontend": 119,
+      "backend": 178
+    },
+    {
+      "date": "2026-03-16",
+      "frontend": 160,
+      "backend": 240
+    },
+    {
+      "date": "2026-03-17",
+      "frontend": 170,
+      "backend": 255
+    }
+  ],
+  "traffic_sources_frontend": [
+    {
+      "source": "google / organic",
+      "sessions": 620
+    },
+    {
+      "source": "(direct) / (none)",
+      "sessions": 380
+    },
+    {
+      "source": "weixin / social",
+      "sessions": 310
+    },
+    {
+      "source": "baidu / organic",
+      "sessions": 120
+    },
+    {
+      "source": "douyin / social",
+      "sessions": 95
+    }
+  ],
+  "traffic_sources_backend": [
+    {
+      "source": "(direct) / (none)",
+      "sessions": 690
+    },
+    {
+      "source": "google / organic",
+      "sessions": 878
+    },
+    {
+      "source": "weixin / social",
+      "sessions": 460
+    },
+    {
+      "source": "douyin / social",
+      "sessions": 419
+    },
+    {
+      "source": "xiaohongshu / social",
+      "sessions": 162
+    }
+  ],
+  "landing_pages_frontend": [
+    {
+      "page": "/",
+      "sessions": 712
+    },
+    {
+      "page": "/products",
+      "sessions": 356
+    },
+    {
+      "page": "/blog/coffee-guide",
+      "sessions": 242
+    },
+    {
+      "page": "/pricing",
+      "sessions": 128
+    }
+  ],
+  "landing_pages_backend": [
+    {
+      "page": "/dashboard",
+      "sessions": 580
+    },
+    {
+      "page": "/orders",
+      "sessions": 420
+    },
+    {
+      "page": "/analytics",
+      "sessions": 310
+    },
+    {
+      "page": "/settings",
+      "sessions": 185
+    }
+  ],
+  "exit_pages_frontend": [
+    {
+      "page": "/pricing",
+      "sessions": 470
+    },
+    {
+      "page": "/contact",
+      "sessions": 310
+    },
+    {
+      "page": "/",
+      "sessions": 242
+    }
+  ],
+  "exit_pages_backend": [
+    {
+      "page": "/orders",
+      "sessions": 600
+    },
+    {
+      "page": "/dashboard",
+      "sessions": 460
+    },
+    {
+      "page": "/settings",
+      "sessions": 228
+    }
+  ],
+  "signups_1d": {
+    "total": 18,
+    "users": 15,
+    "by_method": [
+      {
+        "method": "email",
+        "count": 10
+      },
+      {
+        "method": "google",
+        "count": 5
+      },
+      {
+        "method": "wechat",
+        "count": 3
+      }
+    ]
+  },
+  "signups_7d": {
+    "total": 135,
+    "users": 112,
+    "by_method": [
+      {
+        "method": "email",
+        "count": 72
+      },
+      {
+        "method": "google",
+        "count": 38
+      },
+      {
+        "method": "wechat",
+        "count": 25
+      }
+    ]
+  },
+  "signups_30d": {
+    "total": 520,
+    "users": 438,
+    "by_method": [
+      {
+        "method": "email",
+        "count": 280
+      },
+      {
+        "method": "google",
+        "count": 148
+      },
+      {
+        "method": "wechat",
+        "count": 92
+      }
+    ]
+  },
+  "signup_trend": [
+    {
+      "date": "2026-02-15",
+      "signups": 16
+    },
+    {
+      "date": "2026-02-16",
+      "signups": 15
+    },
+    {
+      "date": "2026-02-17",
+      "signups": 19
+    },
+    {
+      "date": "2026-02-18",
+      "signups": 18
+    },
+    {
+      "date": "2026-02-19",
+      "signups": 18
+    },
+    {
+      "date": "2026-02-20",
+      "signups": 7
+    },
+    {
+      "date": "2026-02-21",
+      "signups": 6
+    },
+    {
+      "date": "2026-02-22",
+      "signups": 23
+    },
+    {
+      "date": "2026-02-23",
+      "signups": 16
+    },
+    {
+      "date": "2026-02-24",
+      "signups": 21
+    },
+    {
+      "date": "2026-02-25",
+      "signups": 15
+    },
+    {
+      "date": "2026-02-26",
+      "signups": 15
+    },
+    {
+      "date": "2026-02-27",
+      "signups": 6
+    },
+    {
+      "date": "2026-02-28",
+      "signups": 8
+    },
+    {
+      "date": "2026-03-01",
+      "signups": 18
+    },
+    {
+      "date": "2026-03-02",
+      "signups": 23
+    },
+    {
+      "date": "2026-03-03",
+      "signups": 15
+    },
+    {
+      "date": "2026-03-04",
+      "signups": 23
+    },
+    {
+      "date": "2026-03-05",
+      "signups": 18
+    },
+    {
+      "date": "2026-03-06",
+      "signups": 13
+    },
+    {
+      "date": "2026-03-07",
+      "signups": 11
+    },
+    {
+      "date": "2026-03-08",
+      "signups": 18
+    },
+    {
+      "date": "2026-03-09",
+      "signups": 22
+    },
+    {
+      "date": "2026-03-10",
+      "signups": 19
+    },
+    {
+      "date": "2026-03-11",
+      "signups": 15
+    },
+    {
+      "date": "2026-03-12",
+      "signups": 17
+    },
+    {
+      "date": "2026-03-13",
+      "signups": 11
+    },
+    {
+      "date": "2026-03-14",
+      "signups": 10
+    },
+    {
+      "date": "2026-03-15",
+      "signups": 19
+    },
+    {
+      "date": "2026-03-16",
+      "signups": 17
+    },
+    {
+      "date": "2026-03-17",
+      "signups": 18
+    }
+  ],
+  "signup_by_source_1d": [
+    {
+      "source": "google / organic",
+      "signups": 5
+    },
+    {
+      "source": "(direct) / (none)",
+      "signups": 3
+    },
+    {
+      "source": "weixin / social",
+      "signups": 2
+    }
+  ],
+  "signup_by_source_7d": [
+    {
+      "source": "google / organic",
+      "signups": 35
+    },
+    {
+      "source": "(direct) / (none)",
+      "signups": 21
+    },
+    {
+      "source": "weixin / social",
+      "signups": 14
+    }
+  ],
+  "signup_by_source_30d": [
+    {
+      "source": "google / organic",
+      "signups": 150
+    },
+    {
+      "source": "(direct) / (none)",
+      "signups": 90
+    },
+    {
+      "source": "weixin / social",
+      "signups": 60
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-02-15",
+      "active_users": 310,
+      "sessions": 455,
+      "page_views": 1420,
+      "new_users": 108
+    },
+    {
+      "date": "2026-02-16",
+      "active_users": 420,
+      "sessions": 625,
+      "page_views": 1960,
+      "new_users": 147
+    },
+    {
+      "date": "2026-02-17",
+      "active_users": 385,
+      "sessions": 570,
+      "page_views": 1780,
+      "new_users": 134
+    },
+    {
+      "date": "2026-02-18",
+      "active_users": 450,
+      "sessions": 668,
+      "page_views": 2090,
+      "new_users": 157
+    },
+    {
+      "date": "2026-02-19",
+      "active_users": 468,
+      "sessions": 695,
+      "page_views": 2180,
+      "new_users": 163
+    },
+    {
+      "date": "2026-02-20",
+      "active_users": 430,
+      "sessions": 640,
+      "page_views": 2000,
+      "new_users": 150
+    },
+    {
+      "date": "2026-02-21",
+      "active_users": 280,
+      "sessions": 415,
+      "page_views": 1300,
+      "new_users": 98
+    },
+    {
+      "date": "2026-02-22",
+      "active_users": 295,
+      "sessions": 438,
+      "page_views": 1370,
+      "new_users": 103
+    },
+    {
+      "date": "2026-02-23",
+      "active_users": 465,
+      "sessions": 692,
+      "page_views": 2165,
+      "new_users": 162
+    },
+    {
+      "date": "2026-02-24",
+      "active_users": 440,
+      "sessions": 655,
+      "page_views": 2050,
+      "new_users": 154
+    },
+    {
+      "date": "2026-02-25",
+      "active_users": 425,
+      "sessions": 632,
+      "page_views": 1980,
+      "new_users": 148
+    },
+    {
+      "date": "2026-02-26",
+      "active_users": 478,
+      "sessions": 710,
+      "page_views": 2220,
+      "new_users": 167
+    },
+    {
+      "date": "2026-02-27",
+      "active_users": 412,
+      "sessions": 612,
+      "page_views": 1915,
+      "new_users": 144
+    },
+    {
+      "date": "2026-02-28",
+      "active_users": 275,
+      "sessions": 408,
+      "page_views": 1280,
+      "new_users": 96
+    },
+    {
+      "date": "2026-03-01",
+      "active_users": 290,
+      "sessions": 432,
+      "page_views": 1350,
+      "new_users": 101
+    },
+    {
+      "date": "2026-03-02",
+      "active_users": 485,
+      "sessions": 722,
+      "page_views": 2260,
+      "new_users": 169
+    },
+    {
+      "date": "2026-03-03",
+      "active_users": 455,
+      "sessions": 678,
+      "page_views": 2120,
+      "new_users": 159
+    },
+    {
+      "date": "2026-03-04",
+      "active_users": 418,
+      "sessions": 622,
+      "page_views": 1945,
+      "new_users": 146
+    },
+    {
+      "date": "2026-03-05",
+      "active_users": 472,
+      "sessions": 702,
+      "page_views": 2198,
+      "new_users": 165
+    },
+    {
+      "date": "2026-03-06",
+      "active_users": 445,
+      "sessions": 662,
+      "page_views": 2072,
+      "new_users": 155
+    },
+    {
+      "date": "2026-03-07",
+      "active_users": 282,
+      "sessions": 420,
+      "page_views": 1315,
+      "new_users": 98
+    },
+    {
+      "date": "2026-03-08",
+      "active_users": 305,
+      "sessions": 454,
+      "page_views": 1420,
+      "new_users": 106
+    },
+    {
+      "date": "2026-03-09",
+      "active_users": 492,
+      "sessions": 732,
+      "page_views": 2290,
+      "new_users": 172
+    },
+    {
+      "date": "2026-03-10",
+      "active_users": 460,
+      "sessions": 685,
+      "page_views": 2142,
+      "new_users": 161
+    },
+    {
+      "date": "2026-03-11",
+      "active_users": 435,
+      "sessions": 648,
+      "page_views": 2028,
+      "new_users": 152
+    },
+    {
+      "date": "2026-03-12",
+      "active_users": 480,
+      "sessions": 715,
+      "page_views": 2238,
+      "new_users": 168
+    },
+    {
+      "date": "2026-03-13",
+      "active_users": 420,
+      "sessions": 625,
+      "page_views": 1955,
+      "new_users": 147
+    },
+    {
+      "date": "2026-03-14",
+      "active_users": 270,
+      "sessions": 402,
+      "page_views": 1258,
+      "new_users": 94
+    },
+    {
+      "date": "2026-03-15",
+      "active_users": 298,
+      "sessions": 443,
+      "page_views": 1388,
+      "new_users": 104
+    },
+    {
+      "date": "2026-03-16",
+      "active_users": 400,
+      "sessions": 595,
+      "page_views": 1862,
+      "new_users": 140
+    },
+    {
+      "date": "2026-03-17",
+      "active_users": 425,
+      "sessions": 618,
+      "page_views": 1890,
+      "new_users": 148
+    }
+  ]
 }

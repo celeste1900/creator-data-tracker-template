@@ -4,7 +4,13 @@
 
 ## 仪表盘预览
 
-用浏览器打开 `index.html`，输入访问码 `888888` 即可查看虚拟数据示例（StarBrew咖啡虚拟品牌）。
+克隆后在项目目录运行：
+
+```bash
+python3 -m http.server 8080
+```
+
+然后浏览器打开 http://localhost:8080 ，输入访问码 `888888`，即可查看虚拟数据示例（StarBrew咖啡虚拟品牌）。
 
 ## 你提供什么 → 你得到什么
 
@@ -55,6 +61,10 @@ python scripts/setup_cron.py
 1. 将仓库推送到你的 GitHub
 2. 在 [Vercel](https://vercel.com) 导入仓库，Framework 选 `Other`
 3. 之后每次采集完自动推送，仪表盘自动更新
+
+## 详细介绍
+
+想了解仪表盘每个区域展示什么、数据从哪来、怎么获取？看 **[项目介绍](docs/项目介绍.md)**。
 
 ## 各模块配置
 

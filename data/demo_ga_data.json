@@ -1,0 +1,116 @@
+{
+  "updated_at": "2026-03-17 09:10:00",
+  "realtime_users": 12,
+  "overview_1d": {
+    "active_users": 425,
+    "sessions": 618,
+    "page_views": 1890,
+    "avg_session_duration": 185.3
+  },
+  "overview_7d": {
+    "active_users": 2850,
+    "sessions": 4280,
+    "page_views": 13500,
+    "avg_session_duration": 192.5
+  },
+  "overview_30d": {
+    "active_users": 11800,
+    "sessions": 17650,
+    "page_views": 55200,
+    "avg_session_duration": 178.8
+  },
+  "daily_trend": [
+    {"date": "2026-02-15", "active_users": 310, "sessions": 455, "page_views": 1420},
+    {"date": "2026-02-16", "active_users": 420, "sessions": 625, "page_views": 1960},
+    {"date": "2026-02-17", "active_users": 385, "sessions": 570, "page_views": 1780},
+    {"date": "2026-02-18", "active_users": 450, "sessions": 668, "page_views": 2090},
+    {"date": "2026-02-19", "active_users": 468, "sessions": 695, "page_views": 2180},
+    {"date": "2026-02-20", "active_users": 430, "sessions": 640, "page_views": 2000},
+    {"date": "2026-02-21", "active_users": 280, "sessions": 415, "page_views": 1300},
+    {"date": "2026-02-22", "active_users": 295, "sessions": 438, "page_views": 1370},
+    {"date": "2026-02-23", "active_users": 465, "sessions": 692, "page_views": 2165},
+    {"date": "2026-02-24", "active_users": 440, "sessions": 655, "page_views": 2050},
+    {"date": "2026-02-25", "active_users": 425, "sessions": 632, "page_views": 1980},
+    {"date": "2026-02-26", "active_users": 478, "sessions": 710, "page_views": 2220},
+    {"date": "2026-02-27", "active_users": 412, "sessions": 612, "page_views": 1915},
+    {"date": "2026-02-28", "active_users": 275, "sessions": 408, "page_views": 1280},
+    {"date": "2026-03-01", "active_users": 290, "sessions": 432, "page_views": 1350},
+    {"date": "2026-03-02", "active_users": 485, "sessions": 722, "page_views": 2260},
+    {"date": "2026-03-03", "active_users": 455, "sessions": 678, "page_views": 2120},
+    {"date": "2026-03-04", "active_users": 418, "sessions": 622, "page_views": 1945},
+    {"date": "2026-03-05", "active_users": 472, "sessions": 702, "page_views": 2198},
+    {"date": "2026-03-06", "active_users": 445, "sessions": 662, "page_views": 2072},
+    {"date": "2026-03-07", "active_users": 282, "sessions": 420, "page_views": 1315},
+    {"date": "2026-03-08", "active_users": 305, "sessions": 454, "page_views": 1420},
+    {"date": "2026-03-09", "active_users": 492, "sessions": 732, "page_views": 2290},
+    {"date": "2026-03-10", "active_users": 460, "sessions": 685, "page_views": 2142},
+    {"date": "2026-03-11", "active_users": 435, "sessions": 648, "page_views": 2028},
+    {"date": "2026-03-12", "active_users": 480, "sessions": 715, "page_views": 2238},
+    {"date": "2026-03-13", "active_users": 420, "sessions": 625, "page_views": 1955},
+    {"date": "2026-03-14", "active_users": 270, "sessions": 402, "page_views": 1258},
+    {"date": "2026-03-15", "active_users": 298, "sessions": 443, "page_views": 1388},
+    {"date": "2026-03-16", "active_users": 400, "sessions": 595, "page_views": 1862},
+    {"date": "2026-03-17", "active_users": 425, "sessions": 618, "page_views": 1890}
+  ],
+  "traffic_sources": [
+    {"source": "google / organic", "sessions": 1498},
+    {"source": "(direct) / (none)", "sessions": 1070},
+    {"source": "weixin / social", "sessions": 770},
+    {"source": "douyin / social", "sessions": 514},
+    {"source": "xiaohongshu / social", "sessions": 257},
+    {"source": "baidu / organic", "sessions": 171}
+  ],
+  "top_pages": [
+    {"page": "/", "views": 4200, "users": 2800},
+    {"page": "/products", "views": 2800, "users": 1900},
+    {"page": "/about", "views": 1500, "users": 1100},
+    {"page": "/blog/coffee-guide", "views": 1200, "users": 900},
+    {"page": "/pricing", "views": 980, "users": 750},
+    {"page": "/blog/latte-art", "views": 850, "users": 620},
+    {"page": "/contact", "views": 600, "users": 450}
+  ],
+  "devices": [
+    {"device": "mobile", "sessions": 2654},
+    {"device": "desktop", "sessions": 1412},
+    {"device": "tablet", "sessions": 214}
+  ],
+  "operating_systems": [
+    {"os": "iOS", "sessions": 1626},
+    {"os": "Android", "sessions": 1198},
+    {"os": "Windows", "sessions": 856},
+    {"os": "Macintosh", "sessions": 428},
+    {"os": "Linux", "sessions": 172}
+  ],
+  "languages": [
+    {"language": "zh-cn", "sessions": 2782},
+    {"language": "en-us", "sessions": 642},
+    {"language": "zh-tw", "sessions": 342},
+    {"language": "ja", "sessions": 257},
+    {"language": "ko", "sessions": 171}
+  ],
+  "landing_pages": [
+    {"page": "/", "sessions": 1712},
+    {"page": "/products", "sessions": 856},
+    {"page": "/blog/coffee-guide", "sessions": 642},
+    {"page": "/pricing", "sessions": 428},
+    {"page": "/about", "sessions": 342}
+  ],
+  "exit_pages": [
+    {"page": "/pricing", "sessions": 1070},
+    {"page": "/contact", "sessions": 770},
+    {"page": "/", "sessions": 642},
+    {"page": "/products", "sessions": 514},
+    {"page": "/blog/coffee-guide", "sessions": 428}
+  ],
+  "geo": [
+    {"country": "中国", "sessions": 2996},
+    {"country": "美国", "sessions": 428},
+    {"country": "日本", "sessions": 257},
+    {"country": "中国台湾", "sessions": 214},
+    {"country": "韩国", "sessions": 128}
+  ],
+  "real_registrations": {
+    "daily": [],
+    "recent_events": []
+  }
+}

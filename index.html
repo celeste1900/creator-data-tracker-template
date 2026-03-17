@@ -1075,17 +1075,28 @@
             }
         }
 
+        // 优先加载正式数据，不存在时回退到 demo 数据
+        async function fetchWithDemo(path) {
+            const resp = await fetch(path);
+            if (resp.ok) return resp;
+            const dir = path.substring(0, path.lastIndexOf('/') + 1);
+            const file = path.substring(path.lastIndexOf('/') + 1);
+            const demoResp = await fetch(dir + 'demo_' + file);
+            if (demoResp.ok) return demoResp;
+            throw new Error('数据文件不存在');
+        }
+
         // 加载平台数据
         async function loadPlatformData() {
             try {
-                const response = await fetch('data/all_data.json');
+                const response = await fetchWithDemo('data/all_data.json');
                 if (!response.ok) throw new Error('加载失败');
                 platformData = await response.json();
                 // 用共创者推送的订单数据覆盖
                 try {
                     const [ordResp, regResp] = await Promise.all([
-                        fetch('data/orders_data.json'),
-                        fetch('data/registration_data.json').catch(() => null)
+                        fetchWithDemo('data/orders_data.json').catch(() => new Response('{}', {status: 404})),
+                        fetchWithDemo('data/registration_data.json').catch(() => null)
                     ]);
                     // 构建注册数据按日期索引
                     let regByDate = {};
@@ -1147,12 +1158,12 @@
         // 加载 GA 数据
         async function loadGAData() {
             try {
-                const response = await fetch('data/ga_data.json');
+                const response = await fetchWithDemo('data/ga_data.json');
                 if (!response.ok) throw new Error('加载失败');
                 gaData = await response.json();
                 // 用共创者推送的注册数据覆盖 GA 里的注册数据
                 try {
-                    const regResp = await fetch('data/registration_data.json');
+                    const regResp = await fetchWithDemo('data/registration_data.json').catch(() => new Response('{}', {status: 404}));
                     if (regResp.ok) {
                         const regData = await regResp.json();
                         if (regData.daily && regData.daily.length > 0) {

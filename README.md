@@ -4,24 +4,128 @@
 
 ## 仪表盘预览
 
-克隆后在项目目录运行：
+![仪表盘预览](assets/preview_full.png)
 
-```bash
-python3 -m http.server 8080
-```
+克隆后运行 `python3 -m http.server 8080`，浏览器打开 http://localhost:8080 ，输入访问码 `888888` 查看虚拟数据示例。
 
-然后浏览器打开 http://localhost:8080 ，输入访问码 `888888`，即可查看虚拟数据示例（StarBrew咖啡虚拟品牌）。
+---
 
 ## 你提供什么 → 你得到什么
 
 | 你提供 | 你得到 | 是否必选 |
 |--------|--------|----------|
-| 抖音/小红书创作者后台 Cookie | 粉丝、播放、点赞、评论、分享、收藏等数据的每日自动采集和趋势分析 | 至少选一个平台 |
-| 视频号微信扫码（每天一次） | 视频号粉丝、播放、互动数据采集 | 可选 |
-| Google Analytics 服务账号 | 网站流量、来源、用户行为等 GA4 数据面板 | 可选 |
+| 抖音/小红书创作者后台 Cookie | 粉丝、播放、点赞、评论、分享、收藏的每日自动采集和趋势分析 | 至少选一个平台 |
+| 视频号微信扫码（每天一次） | 视频号粉丝、播放、互动数据 | 可选 |
+| Google Analytics 服务账号 | 网站流量、来源、用户行为的 GA4 数据面板 | 可选 |
 | 后台订单/注册 API 对接 | 订单金额、注册用户、转化率趋势图表 | 可选 |
 
 **最终产出**：一个 Vercel 在线仪表盘，每天自动更新，团队随时查看。
+
+---
+
+## 仪表盘页面组成
+
+### 1. 平台数据卡片（左侧）
+
+每个平台一张卡片：作品数、粉丝、播放、点赞、评论、分享、收藏、总互动。每个指标下方显示增量（vs 昨天/7天前/30天前可切换）。
+
+| 项目 | 说明 |
+|------|------|
+| 支持平台 | 抖音、小红书、视频号 |
+| 数据文件 | `data/all_data.json` |
+| 采集方式 | `collect_all.py` 用 Cookie 登录平台后台自动抓取 |
+| 自动化 | 抖音/小红书全自动；视频号每天需扫码一次 |
+
+### 2. 官网数据监测（右上）
+
+GA4 网站流量数据，三个 tab：
+
+| Tab | 展示内容 |
+|-----|----------|
+| **全部** | 注册人数、UV、PV、会话数、平均时长 |
+| **前台官网** | 前台网站的 UV/PV/会话 + TOP 3 页面 |
+| **后台系统** | 后台应用的 UV/PV/会话 + TOP 3 页面 |
+
+| 项目 | 说明 |
+|------|------|
+| 数据文件 | `data/ga_data.json` |
+| 采集方式 | `scripts/collect_ga.py` 通过 GA Data API 查询 |
+| 域名配置 | 在 `collect_ga.py` 中设置 `ALLOWED_HOSTNAMES`、`FRONTEND_HOSTNAMES`、`BACKEND_HOSTNAMES` |
+| 自动化 | 全自动 |
+
+### 3. 订单与收入栏
+
+累计订单数、今日新增、累计金额（USD）。
+
+| 项目 | 说明 |
+|------|------|
+| 数据文件 | `data/orders_data.json` |
+| 采集方式 | **不由采集脚本生成**，需要你自己把后台数据推送到仓库 |
+| 推送方式 | AI 机器人共创者 / 自写脚本调后台 API / 手动编辑 |
+| 不需要？ | 不创建这个文件，仪表盘自动隐藏此区域 |
+
+### 4. 趋势图表
+
+四个 tab 切换：PV/UV 趋势、注册趋势、下单趋势、收起。
+
+| Tab | 数据来源 |
+|-----|----------|
+| PV/UV | `ga_data.json` → `daily_trend` |
+| 注册趋势 | `registration_data.json` 或 `ga_data.json` → `signup_trend` |
+| 下单趋势 | `orders_data.json` → `daily` |
+
+### 5. 流量明细（下方表格）
+
+| 表格 | 数据来源 |
+|------|----------|
+| 热门页面 | `ga_data.json` → `top_pages` |
+| 流量来源 | `ga_data.json` → `traffic_sources` |
+| 着陆页 / 退出页 | `ga_data.json` → `landing_pages` / `exit_pages` |
+| 注册来源转化率 | `ga_data.json` → `signup_by_source_*` |
+| 设备 / 系统 / 语言 / 地理 | `ga_data.json` → `devices` / `operating_systems` / `languages` / `geo` |
+
+---
+
+## 数据文件总览
+
+| 文件 | 怎么生成 | 内容 | 必需？ |
+|------|----------|------|--------|
+| `data/all_data.json` | `collect_all.py` 自动 | 平台粉丝、播放、点赞等 | 是 |
+| `data/ga_data.json` | `collect_ga.py` 自动 | GA4 网站流量 | 可选 |
+| `data/orders_data.json` | 后台推送 | 订单数、收入金额 | 可选 |
+| `data/registration_data.json` | 后台推送 | 每日注册用户数 | 可选 |
+| `data/access_code.json` | 手动创建 | 仪表盘 6 位访问码 | 是 |
+
+---
+
+## 数据获取方式
+
+| 数据 | 获取方式 | 自动化程度 |
+|------|----------|-----------|
+| 抖音 | Cookie + Playwright 抓取 | 全自动（Cookie 约 14 天更新） |
+| 小红书 | Cookie + Playwright 抓取 | 全自动（Cookie 约 14 天更新） |
+| 视频号 | 微信扫码 + API 抓取 | **每天需扫码**（Cookie 仅几小时） |
+| GA 网站流量 | Google Analytics Data API | 全自动 |
+| 订单/收入 | 后台 API → 推送到仓库 | 取决于对接方式 |
+| 注册用户 | 后台 API → 推送到仓库 | 取决于对接方式 |
+
+---
+
+## 自动化流程
+
+```
+每天定时触发（macOS launchd）
+    │
+    ├── 采集抖音/小红书（全自动）
+    ├── 采集视频号（弹窗提醒扫码，2分钟超时）
+    ├── 采集 GA 数据（全自动）
+    ├── 数据写入 data/*.json + SQLite
+    └── git push → Vercel 自动部署 → 仪表盘更新
+
+后台订单/注册数据由机器人或脚本另行推送，同样触发 Vercel 部署。
+```
+
+---
 
 ## 快速开始
 
@@ -42,11 +146,10 @@ cp config.example.json config.json
 # 编辑 config.json，填入你的平台 Cookie
 ```
 
-### 3. 运行一次看效果
+### 3. 运行一次
 
 ```bash
 python collect_all.py
-open index.html
 ```
 
 ### 4. 设置每日定时采集
@@ -58,30 +161,21 @@ python scripts/setup_cron.py
 
 ### 5. 部署到 Vercel
 
-1. 将仓库推送到你的 GitHub
-2. 在 [Vercel](https://vercel.com) 导入仓库，Framework 选 `Other`
+1. 推送到你的 GitHub
+2. [Vercel](https://vercel.com) 导入仓库，Framework 选 `Other`
 3. 之后每次采集完自动推送，仪表盘自动更新
 
-## 详细介绍
+---
 
-想了解仪表盘每个区域展示什么、数据从哪来、怎么获取？看 **[项目介绍](docs/项目介绍.md)**。
+## 各模块详细配置
 
-## 各模块配置
+| 模块 | 配置文档 |
+|------|----------|
+| 抖音/小红书/视频号 | [平台配置](docs/配置文档.md) |
+| Google Analytics | [GA 配置指南](docs/GA配置指南.md) |
+| 后台业务数据 | [后台数据对接](docs/后台数据对接.md) |
 
-按需选择，详见 docs 目录：
-
-| 模块 | 配置文档 | 备注 |
-|------|----------|------|
-| 抖音/小红书/视频号 | [平台配置](docs/配置文档.md) | Cookie 获取、视频号扫码流程、定时任务 |
-| Google Analytics | [GA 配置指南](docs/GA配置指南.md) | 服务账号创建、域名过滤、代理设置 |
-| 后台业务数据 | [后台数据对接](docs/后台数据对接.md) | 订单、注册、收入数据推送方式 |
-| 完整操作手册 | [操作手册](docs/操作手册.md) | 环境配置、故障排查 |
-
-## 注意事项
-
-- **Cookie 有效期**：抖音/小红书约 14 天更新一次
-- **视频号特殊**：Cookie 仅几小时有效，每天采集都需要微信扫码（定时弹窗提醒，2 分钟内扫码）
-- **数据安全**：`config.json` 和凭证文件已加入 `.gitignore`，不会提交到 Git
+---
 
 ## License
 

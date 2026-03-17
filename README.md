@@ -29,6 +29,8 @@
 
 每个平台一张卡片：作品数、粉丝、播放、点赞、评论、分享、收藏、总互动。每个指标下方显示增量（vs 昨天/7天前/30天前可切换）。
 
+![平台数据卡片](assets/screenshot_platforms.png)
+
 | 项目 | 说明 |
 |------|------|
 | 支持平台 | 抖音、小红书、视频号 |
@@ -38,13 +40,19 @@
 
 ### 2. 官网数据监测（右上）
 
-GA4 网站流量数据，三个 tab：
+GA4 网站流量数据，三个 tab 切换展示不同维度：
 
-| Tab | 展示内容 |
-|-----|----------|
-| **全部** | 注册人数、UV、PV、会话数、平均时长 |
-| **前台官网** | 前台网站的 UV/PV/会话 + TOP 3 页面 |
-| **后台系统** | 后台应用的 UV/PV/会话 + TOP 3 页面 |
+**「全部」tab** — 所有域名汇总：注册人数、UV、PV、会话数、平均时长
+
+![GA - 全部](assets/screenshot_ga_all.png)
+
+**「前台官网」tab** — 前台网站的 UV/PV/会话 + TOP 3 页面
+
+![GA - 前台官网](assets/screenshot_ga_frontend.png)
+
+**「后台系统」tab** — 后台应用的 UV/PV/会话 + TOP 3 页面
+
+![GA - 后台系统](assets/screenshot_ga_backend.png)
 
 | 项目 | 说明 |
 |------|------|
@@ -57,6 +65,8 @@ GA4 网站流量数据，三个 tab：
 
 累计订单数、今日新增、累计金额（USD）。
 
+![订单与收入](assets/screenshot_orders.png)
+
 | 项目 | 说明 |
 |------|------|
 | 数据文件 | `data/orders_data.json` |
@@ -68,6 +78,8 @@ GA4 网站流量数据，三个 tab：
 
 四个 tab 切换：PV/UV 趋势、注册趋势、下单趋势、收起。
 
+![趋势图表](assets/screenshot_chart.png)
+
 | Tab | 数据来源 |
 |-----|----------|
 | PV/UV | `ga_data.json` → `daily_trend` |
@@ -76,6 +88,8 @@ GA4 网站流量数据，三个 tab：
 
 ### 5. 流量明细（下方表格）
 
+![流量明细表格](assets/screenshot_tables.png)
+
 | 表格 | 数据来源 |
 |------|----------|
 | 热门页面 | `ga_data.json` → `top_pages` |
@@ -83,6 +97,10 @@ GA4 网站流量数据，三个 tab：
 | 着陆页 / 退出页 | `ga_data.json` → `landing_pages` / `exit_pages` |
 | 注册来源转化率 | `ga_data.json` → `signup_by_source_*` |
 | 设备 / 系统 / 语言 / 地理 | `ga_data.json` → `devices` / `operating_systems` / `languages` / `geo` |
+
+### 6. 底部统计（设备/系统/语言/地理）
+
+![底部统计](assets/screenshot_bottom.png)
 
 ---
 

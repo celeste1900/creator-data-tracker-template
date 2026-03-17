@@ -17,7 +17,7 @@ PLIST_PATH = Path.home() / "Library" / "LaunchAgents" / f"{PLIST_NAME}.plist"
 def get_plist_content(hour: int = 9, minute: int = 0) -> str:
     """生成 launchd plist 配置"""
     python_path = sys.executable
-    script_path = PROJECT_DIR / "main.py"
+    script_path = PROJECT_DIR.parent / "collect_all_with_ga.py"
     log_path = PROJECT_DIR / "logs"
 
     return f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -122,7 +122,7 @@ def status():
 def run_now():
     """立即执行一次"""
     print("立即执行数据采集...")
-    os.system(f"cd {PROJECT_DIR} && python3 main.py")
+    os.system(f"cd {PROJECT_DIR.parent} && python3 collect_all_with_ga.py")
 
 
 def main():

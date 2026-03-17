@@ -136,7 +136,13 @@ GA4 网站流量数据，三个 tab 切换展示不同维度。
 
 ## 快速开始
 
-### 1. 克隆并安装
+### 方式一：使用 Claude Code（推荐）
+
+把这个仓库地址发给 [Claude Code](https://claude.com/claude-code)，让它帮你完成克隆、安装、配置、部署的全部流程。
+
+### 方式二：手动部署
+
+#### 1. 克隆并安装
 
 ```bash
 git clone https://github.com/你的用户名/creator-data-tracker.git
@@ -146,33 +152,31 @@ pip install -r requirements.txt
 playwright install chromium
 ```
 
-### 2. 配置
+#### 2. 配置
 
 ```bash
 cp config.example.json config.json
 # 编辑 config.json，填入你的平台 Cookie
 ```
 
-### 3. 运行一次
+#### 3. 运行一次
 
 ```bash
 python collect_all.py
 ```
 
-### 4. 设置每日定时采集
+#### 4. 设置每日定时采集
 
 ```bash
 python scripts/setup_cron.py
 # 选择每天几点采集（视频号需要你在电脑前扫码）
 ```
 
-### 5. 部署到 Vercel
+#### 5. 部署到 Vercel
 
 1. 推送到你的 GitHub
 2. [Vercel](https://vercel.com) 导入仓库，Framework 选 `Other`
 3. 之后每次采集完自动推送，仪表盘自动更新
-
-或者使用 [Claude Code](https://claude.com/claude-code) 一键部署：在项目目录下对 Claude 说 `帮我部署到 Vercel` 即可。
 
 ---
 

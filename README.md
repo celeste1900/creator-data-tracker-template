@@ -172,6 +172,8 @@ python scripts/setup_cron.py
 2. [Vercel](https://vercel.com) 导入仓库，Framework 选 `Other`
 3. 之后每次采集完自动推送，仪表盘自动更新
 
+或者使用 [Claude Code](https://claude.com/claude-code) 一键部署：在项目目录下对 Claude 说 `帮我部署到 Vercel` 即可。
+
 ---
 
 ## 各模块详细配置

@@ -1,0 +1,22 @@
+{
+  "updated_at": "",
+  "source": "your_api",
+  "total_paid_orders": 0,
+  "total_revenue_usd": 0,
+  "daily": [
+    {
+      "date": "2026-01-01",
+      "orders": 5,
+      "revenue_usd": 100,
+      "cumulative_orders": 5,
+      "cumulative_revenue_usd": 100
+    },
+    {
+      "date": "2026-01-02",
+      "orders": 3,
+      "revenue_usd": 60,
+      "cumulative_orders": 8,
+      "cumulative_revenue_usd": 160
+    }
+  ]
+}

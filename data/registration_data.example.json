@@ -1,0 +1,15 @@
+{
+  "updated_at": "",
+  "source": "your_api",
+  "total_users": 0,
+  "daily": [
+    {
+      "date": "2026-01-01",
+      "count": 10
+    },
+    {
+      "date": "2026-01-02",
+      "count": 15
+    }
+  ]
+}

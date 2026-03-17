@@ -236,6 +236,54 @@ python collect_all_with_ga.py
 
 此脚本会依次运行平台采集、GA 数据采集，并自动 git push。
 
+## 后台数据集成（可选）
+
+仪表盘支持展示后台业务数据（订单、收入、注册用户），适合有自己产品后台的团队。
+
+### 数据格式
+
+将数据按以下格式写入 `data/` 目录，仪表盘会自动读取并展示：
+
+**订单数据** — `data/orders_data.json`：
+```json
+{
+  "updated_at": "2026-03-17T10:00:00+08:00",
+  "total_paid_orders": 100,
+  "total_revenue_usd": 5000,
+  "daily": [
+    { "date": "2026-03-15", "orders": 5, "revenue_usd": 100, "cumulative_orders": 95, "cumulative_revenue_usd": 4900 },
+    { "date": "2026-03-16", "orders": 5, "revenue_usd": 100, "cumulative_orders": 100, "cumulative_revenue_usd": 5000 }
+  ]
+}
+```
+
+**注册数据** — `data/registration_data.json`：
+```json
+{
+  "updated_at": "2026-03-17T10:00:00+08:00",
+  "total_users": 5000,
+  "daily": [
+    { "date": "2026-03-15", "count": 150 },
+    { "date": "2026-03-16", "count": 200 }
+  ]
+}
+```
+
+### 如何接入
+
+这两个文件不由采集脚本生成，你需要自己提供数据来源，例如：
+- 写一个脚本从你的后台 API 拉取数据，定时更新这两个 JSON 文件
+- 手动维护
+- 从数据库导出
+
+仪表盘会自动展示：每日订单数、收入趋势、新注册用户、转化率（订单/注册）、累计数据等。
+
+> 如果不需要这个功能，忽略即可。仪表盘检测到文件不存在时会自动隐藏相关模块。
+
+参考示例文件：`data/orders_data.example.json`、`data/registration_data.example.json`
+
+---
+
 ## 注意事项
 
 1. **Cookie 有效期**：抖音/小红书约 14 天需更新一次；视频号 Cookie 仅几小时有效，**每天采集都需要扫码登录**

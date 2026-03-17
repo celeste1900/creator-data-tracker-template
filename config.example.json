@@ -17,6 +17,12 @@
     "cookie_updated_at": "",
     "cookie_expires_hint": 4
   },
+  "gongzhonghao": {
+    "enabled": false,
+    "cookie": "在这里粘贴微信公众号后台的 Cookie（可选）",
+    "cookie_updated_at": "",
+    "cookie_expires_hint": 7
+  },
   "google_analytics": {
     "enabled": false,
     "property_id": "properties/你的GA属性ID",
@@ -26,6 +32,14 @@
     "works_limit": 50,
     "auto_push_to_github": true,
     "github_repo": "your-username/creator-data-tracker",
+    "ga_measurement_protocol": {
+      "measurement_id": "G-XXXXXXXXXX",
+      "api_secret": "在 GA4 后台生成: 管理 → 数据流 → Measurement Protocol API secrets"
+    },
+    "backend_api": {
+      "base_url": "",
+      "api_key": ""
+    },
     "notifications": {
       "macos": true,
       "wechat_work_webhook": "",

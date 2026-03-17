@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>创作者数据分析仪表盘</title>
+    <title>全平台运营数据分析仪表盘</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
@@ -265,33 +265,45 @@
 
         .ga-overview {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 10px;
             margin-bottom: 20px;
         }
 
         .ga-metric {
             text-align: center;
-            padding: 16px;
+            padding: 16px 12px;
             background: #f9fafb;
             border-radius: 10px;
+            min-width: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-height: 100px;
         }
 
         .ga-metric-value {
             font-size: 28px;
             font-weight: 700;
             color: #1f2937;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .ga-metric-label {
             font-size: 13px;
             color: #666;
             margin-top: 4px;
+            height: 20px;
         }
 
         .ga-metric-change {
             font-size: 12px;
             margin-top: 4px;
+            height: 18px;
         }
 
         .ga-grid {
@@ -348,9 +360,33 @@
             color: #4f46e5;
         }
 
-        .ga-chart-container {
-            height: 200px;
+        .chart-axis-wrapper {
+            position: relative;
+        }
+        .axis-overlay {
+            position: absolute;
+            top: 0;
+            z-index: 10;
+            pointer-events: none;
+            background: white;
+            display: none;
+        }
+        .axis-overlay-left {
+            left: 0;
+            box-shadow: 2px 0 6px rgba(0,0,0,0.06);
+        }
+        .axis-overlay-right {
+            right: 0;
+            box-shadow: -2px 0 6px rgba(0,0,0,0.06);
+        }
+        .ga-chart-scroll {
+            overflow-x: auto;
             margin-bottom: 20px;
+            width: 0;
+            min-width: 100%;
+        }
+        .ga-chart-container {
+            height: 260px;
         }
 
         /* 热门内容 */
@@ -431,6 +467,62 @@
             font-weight: 600;
         }
 
+        /* 图表切换标签 */
+        .chart-tab {
+            background: none;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 5px 14px;
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .chart-tab:hover { background: #f3f4f6; }
+        .chart-tab.active {
+            background: #4f46e5;
+            color: #fff;
+            border-color: #4f46e5;
+        }
+
+        /* 订单 + 图表切换行 */
+        .orders-row {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 16px;
+            align-items: stretch;
+        }
+        .orders-bar {
+            grid-column: 1 / 4;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 18px;
+            background: #f9fafb;
+            border-left: 4px solid #ba6547;
+            border-radius: 10px;
+            color: #1f2937;
+        }
+        .chart-tabs-bar {
+            grid-column: 4 / 6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 14px;
+            background: #f9fafb;
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }
+        .orders-bar-icon { font-size: 24px; line-height: 1; }
+        .orders-bar-metrics { display: flex; gap: 24px; flex: 1; flex-wrap: wrap; }
+        .orders-bar-value { font-size: 24px; font-weight: 700; line-height: 1.2; }
+        .orders-bar-label { font-size: 11px; color: #666; margin-top: 2px; }
+        .orders-bar-change { font-size: 14px; font-weight: 600; margin-top: 3px; }
+        .orders-bar-change span { color: #ba6547 !important; }
+        .orders-bar-divider { width: 1px; height: 32px; background: #ddd; margin: 0 4px; }
+
         /* 响应式 */
         @media (max-width: 1400px) {
             .ga-grid-4 {
@@ -455,22 +547,35 @@
         }
 
         @media (max-width: 768px) {
-            .platforms-column {
-                grid-template-columns: 1fr;
-            }
+            .container { padding: 12px; }
+            header { flex-direction: column; gap: 6px; align-items: flex-start; }
+            h1 { font-size: 18px; }
+            .period-selector { width: 100%; }
+            .period-btn { flex: 1; text-align: center; padding: 6px 8px; font-size: 13px; }
+            .platforms-column { grid-template-columns: 1fr; }
+            .platform-stats { grid-template-columns: repeat(2, 1fr); }
+            .ga-grid, .ga-grid-4 { grid-template-columns: 1fr; }
+            .ga-overview { grid-template-columns: repeat(2, 1fr); }
+            .ga-card { padding: 14px; }
+            .ga-metric-value { font-size: 22px; }
+            .orders-row { grid-template-columns: 1fr; }
+            .orders-bar { grid-column: auto; flex-wrap: wrap; gap: 12px; padding: 14px 16px; }
+            .chart-tabs-bar { grid-column: auto; justify-content: flex-start; }
+            .orders-bar-value { font-size: 22px; }
+            .orders-bar-metrics { gap: 20px; }
+            .ga-chart-container { height: 220px; }
+            .ga-tabs { flex-wrap: wrap; }
+            .ga-tabs button { font-size: 12px !important; padding: 6px 10px !important; }
+        }
 
-            .platform-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .ga-grid,
-            .ga-grid-4 {
-                grid-template-columns: 1fr;
-            }
-
-            .ga-overview {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        @media (max-width: 480px) {
+            .container { padding: 8px; }
+            .ga-overview { grid-template-columns: 1fr 1fr; gap: 6px; }
+            .ga-metric { padding: 10px 8px; min-height: 80px; }
+            .ga-metric-value { font-size: 20px; height: auto; }
+            .orders-bar-metrics { gap: 16px; }
+            .orders-bar-value { font-size: 20px; }
+            .content-list { grid-template-columns: 1fr; }
         }
 
         .loading {
@@ -478,12 +583,165 @@
             padding: 40px;
             color: #666;
         }
+
+        /* OTP 锁屏 */
+        .otp-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .otp-overlay.unlocking {
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+        }
+        .otp-overlay.hidden { display: none; }
+
+        .otp-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 24px;
+            padding: 48px 40px 40px;
+            text-align: center;
+            max-width: 420px;
+            width: 90vw;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .otp-logo {
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+        .otp-logo span { color: #818cf8; }
+
+        .otp-subtitle {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .otp-input-group {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        .otp-input-group input {
+            width: 48px;
+            height: 56px;
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            caret-color: #818cf8;
+        }
+        .otp-input-group input:focus {
+            border-color: #818cf8;
+            box-shadow: 0 0 0 3px rgba(129,140,248,0.25);
+            background: rgba(255,255,255,0.1);
+        }
+        .otp-input-group input.filled {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+        }
+        .otp-input-group.error input {
+            border-color: #ef4444;
+            background: rgba(239,68,68,0.1);
+        }
+
+        .otp-error {
+            color: #f87171;
+            font-size: 13px;
+            min-height: 20px;
+            margin-bottom: 8px;
+            transition: opacity 0.2s;
+        }
+
+        .otp-hint {
+            color: rgba(255,255,255,0.4);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-10px); }
+            40% { transform: translateX(10px); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+        }
+        .otp-input-group.shake {
+            animation: shake 0.4s ease;
+        }
+
+        /* 重新锁定按钮 */
+        .relock-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(79,70,229,0.9);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 2px 12px rgba(79,70,229,0.4);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .relock-btn:hover {
+            background: #4f46e5;
+            transform: scale(1.1);
+            box-shadow: 0 4px 20px rgba(79,70,229,0.5);
+        }
     </style>
 </head>
 <body>
+    <!-- OTP 锁屏 -->
+    <div class="otp-overlay" id="otpOverlay">
+        <div class="otp-card">
+            <div class="otp-logo">o<span>fox</span></div>
+            <div class="otp-subtitle">运营数据仪表盘已锁定<br>请输入访问密码</div>
+            <div class="otp-input-group" id="otpGroup">
+                <input type="tel" maxlength="1" inputmode="numeric" autocomplete="off">
+                <input type="tel" maxlength="1" inputmode="numeric" autocomplete="off">
+                <input type="tel" maxlength="1" inputmode="numeric" autocomplete="off">
+                <input type="tel" maxlength="1" inputmode="numeric" autocomplete="off">
+                <input type="tel" maxlength="1" inputmode="numeric" autocomplete="off">
+                <input type="tel" maxlength="1" inputmode="numeric" autocomplete="off">
+            </div>
+            <div class="otp-error" id="otpError"></div>
+            <div class="otp-hint">请输入今日访问密码（随日报发送）</div>
+        </div>
+    </div>
+
+    <!-- 重新锁定按钮 -->
+    <button class="relock-btn" id="relockBtn" title="锁定页面" style="display:none;" onclick="lockPage()">🔒</button>
+
     <div class="container">
         <header>
-            <h1>创作者数据分析仪表盘</h1>
+            <h1>全平台运营数据分析仪表盘</h1>
             <span class="update-time" id="updateTime">数据加载中...</span>
         </header>
 
@@ -506,15 +764,32 @@
                     <div class="ga-header">
                         <div class="ga-icon">📊</div>
                         <div>
-                            <div class="ga-title">网站数据监测</div>
+                            <div class="ga-title">官网数据监测</div>
                             <div class="ga-subtitle" id="gaUpdateTime">加载中...</div>
                         </div>
+                    </div>
+
+                    <!-- Tab 切换 -->
+                    <div class="ga-tabs" style="display:flex; gap:4px; margin-bottom:16px; background:#f1f5f9; padding:4px; border-radius:8px;">
+                        <button class="ga-tab active" data-tab="all" onclick="switchGATab('all')" style="flex:1; padding:8px 16px; border:none; border-radius:6px; cursor:pointer; font-size:13px; font-weight:500; transition:all 0.2s;">
+                            📊 全部
+                        </button>
+                        <button class="ga-tab" data-tab="frontend" onclick="switchGATab('frontend')" style="flex:1; padding:8px 16px; border:none; border-radius:6px; cursor:pointer; font-size:13px; font-weight:500; background:transparent; transition:all 0.2s;">
+                            🌐 前台官网
+                        </button>
+                        <button class="ga-tab" data-tab="backend" onclick="switchGATab('backend')" style="flex:1; padding:8px 16px; border:none; border-radius:6px; cursor:pointer; font-size:13px; font-weight:500; background:transparent; transition:all 0.2s;">
+                            🔐 后台系统
+                        </button>
                     </div>
 
                     <div class="ga-overview" id="gaOverview">
                         <div class="ga-metric">
                             <div class="ga-metric-value">-</div>
-                            <div class="ga-metric-label">活跃用户</div>
+                            <div class="ga-metric-label">UV (独立访客)</div>
+                        </div>
+                        <div class="ga-metric">
+                            <div class="ga-metric-value">-</div>
+                            <div class="ga-metric-label">PV (页面浏览)</div>
                         </div>
                         <div class="ga-metric">
                             <div class="ga-metric-value">-</div>
@@ -522,16 +797,29 @@
                         </div>
                         <div class="ga-metric">
                             <div class="ga-metric-value">-</div>
-                            <div class="ga-metric-label">页面浏览</div>
-                        </div>
-                        <div class="ga-metric">
-                            <div class="ga-metric-value">-</div>
                             <div class="ga-metric-label">平均时长</div>
                         </div>
                     </div>
 
-                    <div class="ga-chart-container">
-                        <canvas id="gaChart"></canvas>
+                    <div id="ordersSection"></div>
+
+                    <div id="chartTabsSticky" style="display:none; position:sticky; top:0; z-index:100; background:#fff; padding:8px 16px; border-bottom:1px solid #f0f0f0; box-shadow:0 2px 8px rgba(0,0,0,0.06);"></div>
+
+                    <div id="chartArea">
+                        <div id="chartContent">
+                            <div class="chart-axis-wrapper" id="chartAxisWrapper">
+                                <canvas id="yAxisOverlayLeft" class="axis-overlay axis-overlay-left"></canvas>
+                                <canvas id="yAxisOverlayRight" class="axis-overlay axis-overlay-right"></canvas>
+                                <div class="ga-chart-scroll" id="gaChartScroll">
+                                    <div class="ga-chart-container" id="gaChartContainer">
+                                        <canvas id="gaChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="gaPageDetail" style="margin-top:12px; margin-bottom:20px; padding:12px; background:#f8f9fa; border-radius:8px; font-size:13px; min-height:60px;">
+                                <div style="color:#999; text-align:center;">悬停图表查看各页面浏览明细</div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- 第一行：热门页面/流量来源/着陆页/退出页 -->
@@ -552,6 +840,19 @@
                             <div class="ga-section-title">退出页</div>
                             <ul class="ga-list" id="gaExitPages"></ul>
                         </div>
+                    </div>
+
+                    <!-- 注册来源转化率排行 -->
+                    <div class="ga-section" style="margin-top: 16px;" id="signupBySourceSection">
+                        <div class="ga-section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                            <span>注册来源转化率排行 <span style="font-weight:normal;color:#bbb;font-size:11px;">· GA事件统计</span></span>
+                            <div id="signupSourceTabs" style="display:flex;gap:4px;">
+                                <button class="signup-source-tab" data-days="1" style="padding:3px 10px;font-size:12px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;color:#666;cursor:pointer;">昨天</button>
+                                <button class="signup-source-tab" data-days="7" style="padding:3px 10px;font-size:12px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;color:#666;cursor:pointer;">7天</button>
+                                <button class="signup-source-tab active" data-days="30" style="padding:3px 10px;font-size:12px;border:1px solid #4f46e5;border-radius:6px;background:#4f46e5;color:#fff;cursor:pointer;">30天</button>
+                            </div>
+                        </div>
+                        <div id="signupBySourceTable" style="overflow-x:auto;"></div>
                     </div>
 
                     <!-- 第二行：设备/操作系统/语言/地理分布 -->
@@ -575,27 +876,158 @@
                     </div>
                 </div>
 
-                <!-- 热门内容 -->
-                <div class="hot-content">
-                    <h2 class="section-title">热门内容 TOP 5</h2>
-                    <div class="content-list" id="hotContentList"></div>
-                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // ===== OTP 锁屏逻辑 =====
+        (function() {
+            const overlay = document.getElementById('otpOverlay');
+            const group = document.getElementById('otpGroup');
+            const inputs = group.querySelectorAll('input');
+            const errorEl = document.getElementById('otpError');
+            const relockBtn = document.getElementById('relockBtn');
+
+            // 检查是否已解锁
+            if (sessionStorage.getItem('dashboard_unlocked') === '1') {
+                overlay.classList.add('hidden');
+                relockBtn.style.display = 'flex';
+            } else {
+                inputs[0].focus();
+            }
+
+            // 从服务端获取访问密码
+            let accessCode = null;
+            let fetchFailed = false;
+
+            async function loadAccessCode() {
+                try {
+                    const resp = await fetch('data/access_code.json');
+                    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                    const data = await resp.json();
+                    accessCode = data.code;
+                } catch (e) {
+                    fetchFailed = true;
+                    errorEl.textContent = '密码服务暂不可用，请联系管理员';
+                    inputs.forEach(i => { i.disabled = true; });
+                }
+            }
+
+            loadAccessCode();
+
+            // 验证输入
+            async function verify() {
+                const code = Array.from(inputs).map(i => i.value).join('');
+                if (code.length !== 6 || fetchFailed || !accessCode) return;
+
+                if (code === accessCode) {
+                    // 解锁成功
+                    sessionStorage.setItem('dashboard_unlocked', '1');
+                    overlay.classList.add('unlocking');
+                    setTimeout(() => {
+                        overlay.classList.add('hidden');
+                        relockBtn.style.display = 'flex';
+                    }, 600);
+                } else {
+                    // 错误
+                    group.classList.add('error', 'shake');
+                    errorEl.textContent = '密码错误，请重试';
+                    setTimeout(() => {
+                        group.classList.remove('error', 'shake');
+                        inputs.forEach(i => i.value = '');
+                        inputs[0].focus();
+                    }, 600);
+                }
+            }
+
+            // 输入处理
+            inputs.forEach((input, idx) => {
+                input.addEventListener('input', () => {
+                    errorEl.textContent = '';
+                    const val = input.value.replace(/\D/g, '');
+                    input.value = val.slice(0, 1);
+                    if (input.value) {
+                        input.classList.add('filled');
+                        if (idx < 5) inputs[idx + 1].focus();
+                        if (idx === 5) verify();
+                    } else {
+                        input.classList.remove('filled');
+                    }
+                });
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !input.value && idx > 0) {
+                        inputs[idx - 1].value = '';
+                        inputs[idx - 1].classList.remove('filled');
+                        inputs[idx - 1].focus();
+                    }
+                });
+                // 支持粘贴完整密码
+                input.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const pasted = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+                    pasted.split('').forEach((ch, i) => {
+                        if (inputs[i]) {
+                            inputs[i].value = ch;
+                            inputs[i].classList.add('filled');
+                        }
+                    });
+                    if (pasted.length === 6) verify();
+                    else if (pasted.length > 0) inputs[Math.min(pasted.length, 5)].focus();
+                });
+            });
+
+            // 锁定页面（全局函数）
+            window.lockPage = function() {
+                sessionStorage.removeItem('dashboard_unlocked');
+                overlay.classList.remove('hidden', 'unlocking');
+                relockBtn.style.display = 'none';
+                inputs.forEach(i => { i.value = ''; i.classList.remove('filled'); });
+                errorEl.textContent = '';
+                inputs[0].focus();
+            };
+        })();
+
+        // ===== 仪表盘逻辑 =====
         // 全局数据
         let platformData = null;
         let gaData = null;
         let gaChart = null;
         let currentPeriod = 1; // 默认对比昨天
+        let currentGATab = 'all'; // 当前GA标签页: all, frontend, backend
+
+        // 切换GA标签页
+        function switchGATab(tab) {
+            currentGATab = tab;
+            // 更新按钮样式
+            document.querySelectorAll('.ga-tab').forEach(btn => {
+                if (btn.dataset.tab === tab) {
+                    btn.classList.add('active');
+                    btn.style.background = '#fff';
+                    btn.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+                } else {
+                    btn.classList.remove('active');
+                    btn.style.background = 'transparent';
+                    btn.style.boxShadow = 'none';
+                }
+            });
+            // 非全部tab时，只显示PV/UV，且确保图表可见
+            if (tab !== 'all') {
+                currentChartTab = 'pvuv';
+                chartCollapsed = false;
+            }
+            // 重新渲染数据
+            if (gaData) {
+                renderGA();
+            }
+        }
 
         // 平台配置
         const platformConfig = {
             douyin: { name: '抖音', icon: 'assets/抖音.png', color: '#fe2c55' },
             xiaohongshu: { name: '小红书', icon: 'assets/小红书.png', color: '#ff2442' },
-            shipinhao: { name: '视频号', icon: 'assets/视频号.jpeg', color: '#fa9d3b' }
+            shipinhao: { name: '视频号', icon: 'assets/视频号.jpeg', color: '#fa9d3b' },
+            gongzhonghao: { name: '公众号', icon: 'assets/公众号.png', color: '#07c160' }
         };
 
         // 格式化数字
@@ -649,11 +1081,66 @@
                 const response = await fetch('data/all_data.json');
                 if (!response.ok) throw new Error('加载失败');
                 platformData = await response.json();
+                // 用共创者推送的订单数据覆盖
+                try {
+                    const [ordResp, regResp] = await Promise.all([
+                        fetch('data/orders_data.json'),
+                        fetch('data/registration_data.json').catch(() => null)
+                    ]);
+                    // 构建注册数据按日期索引
+                    let regByDate = {};
+                    let regTotal = 0;
+                    if (regResp && regResp.ok) {
+                        const regData = await regResp.json();
+                        regTotal = regData.total_users || 0;
+                        let cumUsers = 0;
+                        (regData.daily || []).forEach(d => {
+                            cumUsers += d.count || d.new_users || 0;
+                            regByDate[d.date] = { new_users: d.count || d.new_users || 0, cumulative_users: cumUsers };
+                        });
+                    }
+                    if (ordResp.ok) {
+                        const ordData = await ordResp.json();
+                        if (ordData.daily && ordData.daily.length > 0) {
+                            let cumOrders = 0, cumAmount = 0;
+                            platformData.orders = ordData.daily.map(d => {
+                                if (d.cumulative_orders != null) {
+                                    cumOrders = d.cumulative_orders;
+                                    cumAmount = d.cumulative_revenue_usd || 0;
+                                } else {
+                                    cumOrders += d.orders || d.paid_orders || 0;
+                                    cumAmount += d.revenue_usd || (d.revenue_cents || 0) / 100;
+                                }
+                                const reg = regByDate[d.date] || {};
+                                const nu = d.new_users || reg.new_users || 0;
+                                const cu = d.cumulative_users || reg.cumulative_users || 0;
+                                return {
+                                    date: d.date,
+                                    order_count: cumOrders,
+                                    order_amount: cumAmount,
+                                    new_users: nu,
+                                    cumulative_users: cu,
+                                    daily_orders: d.orders || 0,
+                                    daily_revenue: d.revenue_usd || 0,
+                                    conversion_rate: nu > 0 ? parseFloat(((d.orders || 0) / nu * 100).toFixed(1)) : 0,
+                                };
+                            });
+                            platformData.ordersSummary = {
+                                total_users: ordData.total_users || regTotal || 0,
+                                total_orders: ordData.total_paid_orders || 0,
+                                total_revenue: ordData.total_revenue_usd || 0,
+                                conversion_rate: ordData.conversion_rate || 0,
+                            };
+                        }
+                    }
+                } catch (e) { console.warn('订单数据加载失败，使用默认数据:', e); }
                 document.getElementById('updateTime').textContent = `平台数据更新于 ${platformData.updated_at}`;
                 renderPlatforms();
-                renderHotContent();
+                renderOrdersSection();
             } catch (error) {
                 console.error('平台数据加载失败:', error);
+                document.getElementById('updateTime').textContent = '平台数据加载失败，请检查数据文件';
+                document.getElementById('updateTime').style.color = '#e74c3c';
             }
         }
 
@@ -663,8 +1150,39 @@
                 const response = await fetch('data/ga_data.json');
                 if (!response.ok) throw new Error('加载失败');
                 gaData = await response.json();
+                // 用共创者推送的注册数据覆盖 GA 里的注册数据
+                try {
+                    const regResp = await fetch('data/registration_data.json');
+                    if (regResp.ok) {
+                        const regData = await regResp.json();
+                        if (regData.daily && regData.daily.length > 0) {
+                            const today = new Date(); today.setHours(0,0,0,0);
+                            const yesterday = new Date(today); yesterday.setDate(yesterday.getDate() - 1);
+                            const d7 = new Date(today); d7.setDate(d7.getDate() - 7);
+                            const d30 = new Date(today); d30.setDate(d30.getDate() - 30);
+                            const yStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth()+1).padStart(2,'0')}-${String(yesterday.getDate()).padStart(2,'0')}`;
+                            let sumY = 0, sum7 = 0, sum30 = 0, sumAll = 0;
+                            regData.daily.forEach(d => {
+                                const c = d.count || d.new_users || 0;
+                                sumAll += c;
+                                const dt = new Date(d.date + 'T00:00:00');
+                                if (d.date === yStr) sumY = c;
+                                if (dt >= d7 && dt < today) sum7 += c;
+                                if (dt >= d30 && dt < today) sum30 += c;
+                            });
+                            gaData.real_registrations = {
+                                yesterday: sumY,
+                                last_7_days: sum7,
+                                last_30_days: sum30,
+                                total: regData.total_users || sumAll,
+                                daily: regData.daily
+                            };
+                        }
+                    }
+                } catch (e) { console.warn('注册数据加载失败，使用GA数据:', e); }
                 document.getElementById('gaUpdateTime').textContent = `更新于 ${gaData.updated_at}`;
                 renderGA();
+                bindSignupSourceTabs();
             } catch (error) {
                 console.error('GA 数据加载失败:', error);
                 document.getElementById('gaUpdateTime').textContent = '数据加载失败';
@@ -676,7 +1194,7 @@
             const container = document.getElementById('platformsColumn');
             container.innerHTML = '';
 
-            const platforms = ['douyin', 'xiaohongshu', 'shipinhao'];
+            const platforms = ['douyin', 'xiaohongshu', 'shipinhao', 'gongzhonghao'];
 
             platforms.forEach(platform => {
                 const config = platformConfig[platform];
@@ -685,7 +1203,11 @@
                 const card = document.createElement('div');
                 card.className = 'platform-card';
 
-                if (!data || !data.account) {
+                // 检查是否是公众号且数据未开通（粉丝和阅读都是0）
+                const isGzhPending = platform === 'gongzhonghao' && data && data.account &&
+                    data.account.followers === 0 && data.account.total_views === 0;
+
+                if (!data || !data.account || isGzhPending) {
                     // 未接入或待开通的平台
                     const statusText = isGzhPending ? '待开通数据采集' : '待接入';
                     card.innerHTML = `
@@ -883,6 +1405,11 @@
                 }
             }
 
+            // 容差范围内也没找到，退回到最近一条历史快照（避免对比0导致虚高）
+            if (!oldSnapshot) {
+                oldSnapshot = getClosestSnapshot(platform, compareDate);
+            }
+
             // 计算与历史快照的差值（如果没有历史数据，假设旧值为0）
             const oldWorks = oldSnapshot?.total_works || 0;
             const oldFollowers = oldSnapshot?.followers || 0;
@@ -907,8 +1434,15 @@
         function calculateGAChanges() {
             if (!gaData) return null;
 
-            // 使用 overview_7d 作为当前汇总数据
-            const overview = gaData.overview_7d || {};
+            // 根据对比周期选择对应的概览数据
+            let overview;
+            if (currentPeriod <= 1) {
+                overview = gaData.overview_1d || {};
+            } else if (currentPeriod <= 7) {
+                overview = gaData.overview_7d || {};
+            } else {
+                overview = gaData.overview_30d || {};
+            }
             const currentUsers = overview.active_users || 0;
             const currentSessions = overview.sessions || 0;
             const currentPageViews = overview.page_views || 0;
@@ -927,13 +1461,14 @@
             // 获取最新日期
             const latestDate = new Date(trend[trend.length - 1].date);
 
-            // 计算对比周期的起止日期
+            // 计算对比周期的起止日期（窗口大小与当前周期匹配）
+            const windowSize = currentPeriod <= 1 ? 1 : currentPeriod;
             const periodStart = new Date(latestDate);
-            periodStart.setDate(periodStart.getDate() - currentPeriod - 6); // 7天窗口的起始
+            periodStart.setDate(periodStart.getDate() - currentPeriod - (windowSize - 1));
             const periodEnd = new Date(latestDate);
             periodEnd.setDate(periodEnd.getDate() - currentPeriod);
 
-            // 汇总对比周期内的数据（7天窗口）
+            // 汇总对比周期内的数据
             let oldUsers = 0, oldSessions = 0, oldPageViews = 0;
             let hasOldData = false;
 
@@ -967,55 +1502,167 @@
         function renderGA() {
             if (!gaData) return;
 
-            const overview = gaData.overview_7d || {};
             const realtime = gaData.realtime_users || 0;
-            const gaChanges = calculateGAChanges();
+            // 真实注册数据 (历史+GA合并)
+            const realReg = gaData.real_registrations || {};
+            let signups = 0;
+            if (currentPeriod <= 1) {
+                signups = realReg.yesterday || 0;
+            } else if (currentPeriod === 7) {
+                signups = realReg.last_7_days || 0;
+            } else {
+                signups = realReg.total || 0;
+            }
+            // 根据对比周期选择数据源
+            let periodLabel, segmented, overviewAll;
+            if (currentPeriod <= 1) {
+                periodLabel = '昨天';
+                segmented = gaData.segmented_1d || {};
+                overviewAll = gaData.overview_1d || {};
+            } else if (currentPeriod <= 7) {
+                periodLabel = '7天';
+                segmented = gaData.segmented_7d || {};
+                overviewAll = gaData.overview_7d || {};
+            } else {
+                periodLabel = '30天';
+                segmented = gaData.segmented_30d || {};
+                overviewAll = gaData.overview_30d || {};
+            }
 
-            // 概览指标（包含实时用户和变化值）
-            const overviewHtml = `
-                <div class="ga-metric" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;">
-                    <div class="ga-metric-value" style="color: white;">${realtime}</div>
-                    <div class="ga-metric-label" style="color: rgba(255,255,255,0.9);">实时在线</div>
-                </div>
-                <div class="ga-metric">
-                    <div class="ga-metric-value">${formatNumber(overview.active_users)}</div>
-                    <div class="ga-metric-label">活跃用户 (7天)</div>
-                    <div class="ga-metric-change">${formatChange(gaChanges?.active_users)}</div>
-                </div>
-                <div class="ga-metric">
-                    <div class="ga-metric-value">${formatNumber(overview.sessions)}</div>
-                    <div class="ga-metric-label">会话数</div>
-                    <div class="ga-metric-change">${formatChange(gaChanges?.sessions)}</div>
-                </div>
-                <div class="ga-metric">
-                    <div class="ga-metric-value">${formatNumber(overview.page_views)}</div>
-                    <div class="ga-metric-label">页面浏览</div>
-                    <div class="ga-metric-change">${formatChange(gaChanges?.page_views)}</div>
-                </div>
-                <div class="ga-metric">
-                    <div class="ga-metric-value">${formatDuration(overview.avg_session_duration)}</div>
-                    <div class="ga-metric-label">平均时长</div>
-                </div>
-            `;
+            let overview, topPages, tabLabel, segChanges;
+
+            if (currentGATab === 'frontend') {
+                // 前台数据
+                const frontendData = segmented.frontend || {};
+                overview = {
+                    active_users: frontendData.users || 0,
+                    sessions: frontendData.sessions || 0,
+                    page_views: frontendData.views || 0,
+                    avg_duration: frontendData.avg_duration || 0
+                };
+                topPages = frontendData.pages || [];
+                tabLabel = '官网访客';
+                segChanges = frontendData.changes || {};
+            } else if (currentGATab === 'backend') {
+                // 后台数据
+                const backendData = segmented.backend || {};
+                overview = {
+                    active_users: backendData.users || 0,
+                    sessions: backendData.sessions || 0,
+                    page_views: backendData.views || 0,
+                    avg_duration: backendData.avg_duration || 0
+                };
+                topPages = backendData.pages || [];
+                tabLabel = '登录用户';
+                segChanges = backendData.changes || {};
+            } else {
+                // 全部数据
+                overview = overviewAll;
+                topPages = gaData.top_pages || [];
+                tabLabel = '全站';
+                segChanges = null;
+            }
+
+            const gaChanges = currentGATab === 'all' ? calculateGAChanges() : {
+                active_users: segChanges?.users || 0,
+                sessions: segChanges?.sessions || 0,
+                page_views: segChanges?.views || 0
+            };
+
+            // 概览指标
+            let overviewHtml;
+            if (currentGATab === 'all') {
+                // 全部Tab - 保持原有布局
+                overviewHtml = `
+                    <div class="ga-metric" id="regMetric" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white;">
+                        <div class="ga-metric-value" style="color: white;">${formatNumber(signups)}</div>
+                        <div class="ga-metric-label" style="color: rgba(255,255,255,0.9);">注册人数 (${periodLabel})</div>
+                    </div>
+                    <div class="ga-metric">
+                        <div class="ga-metric-value">${formatNumber(overview.active_users)}</div>
+                        <div class="ga-metric-label">UV (独立访客)</div>
+                        ${gaChanges ? `<div class="ga-metric-change">${formatChange(gaChanges.active_users)}</div>` : ''}
+                    </div>
+                    <div class="ga-metric">
+                        <div class="ga-metric-value">${formatNumber(overview.page_views)}</div>
+                        <div class="ga-metric-label">PV (页面浏览)</div>
+                        ${gaChanges ? `<div class="ga-metric-change">${formatChange(gaChanges.page_views)}</div>` : ''}
+                    </div>
+                    <div class="ga-metric">
+                        <div class="ga-metric-value">${formatNumber(overview.sessions)}</div>
+                        <div class="ga-metric-label">会话数</div>
+                        ${gaChanges ? `<div class="ga-metric-change">${formatChange(gaChanges.sessions)}</div>` : ''}
+                    </div>
+                    <div class="ga-metric">
+                        <div class="ga-metric-value">${formatDuration(overview.avg_session_duration)}</div>
+                        <div class="ga-metric-label">平均时长</div>
+                    </div>
+                `;
+            } else {
+                // 前台/后台Tab - 新布局：左边3个指标，右边TOP3页面
+                const top3Pages = topPages.slice(0, 3).map(p =>
+                    `<div style="display:flex; justify-content:space-between; padding:2px 0; border-bottom:1px solid #f0f0f0;">
+                        <span style="color:#666; font-size:10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:90px;" title="${p.page}">${p.page}</span>
+                        <span style="font-weight:500; font-size:10px;">${formatNumber(p.views)}</span>
+                    </div>`
+                ).join('');
+
+                overviewHtml = `
+                    <div class="ga-metric">
+                        <div class="ga-metric-value">${formatNumber(overview.active_users)}</div>
+                        <div class="ga-metric-label">UV (${tabLabel})</div>
+                        <div class="ga-metric-change">${formatChange(gaChanges.active_users)}</div>
+                    </div>
+                    <div class="ga-metric">
+                        <div class="ga-metric-value">${formatNumber(overview.page_views)}</div>
+                        <div class="ga-metric-label">PV (页面浏览)</div>
+                        <div class="ga-metric-change">${formatChange(gaChanges.page_views)}</div>
+                    </div>
+                    <div class="ga-metric">
+                        <div class="ga-metric-value">${formatNumber(overview.sessions)}</div>
+                        <div class="ga-metric-label">会话数</div>
+                        <div class="ga-metric-change">${formatChange(gaChanges.sessions)}</div>
+                    </div>
+                    <div class="ga-metric">
+                        <div class="ga-metric-value" style="font-size:18px; white-space:nowrap;">${formatDuration(overview.avg_duration)}</div>
+                        <div class="ga-metric-label">平均时长</div>
+                        <div class="ga-metric-change" style="visibility:hidden;">-</div>
+                    </div>
+                    <div class="ga-metric" style="text-align:left;">
+                        <div class="ga-metric-value" style="font-size:13px; color:#1f2937; font-weight:600; justify-content:flex-start;">TOP 3 页面</div>
+                        <div style="flex:1;">${top3Pages || '<div style="color:#999; font-size:10px;">暂无数据</div>'}</div>
+                    </div>
+                `;
+            }
+
             document.getElementById('gaOverview').innerHTML = overviewHtml;
 
+            // 渲染订单数据区域
+            renderOrdersSection();
+
             // 热门页面
-            const topPagesHtml = (gaData.top_pages || []).slice(0, 5).map(page => `
+            const topPagesHtml = topPages.slice(0, 5).map(page => `
                 <li class="ga-list-item">
                     <span class="ga-list-name" title="${page.page}">${page.page}</span>
-                    <span class="ga-list-value">${formatNumber(page.views)}</span>
+                    <span class="ga-list-value" title="浏览 ${formatNumber(page.views)} / 用户 ${formatNumber(page.users)}">${formatNumber(page.views)} <small style="color:#999;font-size:10px">(${page.users}人)</small></span>
                 </li>
             `).join('');
             document.getElementById('gaTopPages').innerHTML = topPagesHtml || '<li class="ga-list-item">暂无数据</li>';
 
-            // 流量来源
-            const sourcesHtml = (gaData.traffic_sources || []).slice(0, 5).map(src => `
+            // 流量来源（根据 tab 选择数据源）
+            const trafficData = currentGATab === 'frontend' ? gaData.traffic_sources_frontend
+                : currentGATab === 'backend' ? gaData.traffic_sources_backend
+                : gaData.traffic_sources;
+            const sourcesHtml = (trafficData || []).slice(0, 5).map(src => `
                 <li class="ga-list-item">
                     <span class="ga-list-name">${src.source}</span>
                     <span class="ga-list-value">${formatNumber(src.sessions)}</span>
                 </li>
             `).join('');
             document.getElementById('gaTrafficSources').innerHTML = sourcesHtml || '<li class="ga-list-item">暂无数据</li>';
+
+            // 注册来源转化率排行
+            renderSignupBySource();
 
             // 设备类型
             const devicesHtml = (gaData.devices || []).map(d => `
@@ -1044,8 +1691,11 @@
             `).join('');
             document.getElementById('gaLanguages').innerHTML = langHtml || '<li class="ga-list-item">暂无数据</li>';
 
-            // 着陆页
-            const landingHtml = (gaData.landing_pages || []).slice(0, 5).map(p => `
+            // 着陆页（根据 tab 选择数据源）
+            const landingData = currentGATab === 'frontend' ? gaData.landing_pages_frontend
+                : currentGATab === 'backend' ? gaData.landing_pages_backend
+                : gaData.landing_pages;
+            const landingHtml = (landingData || []).slice(0, 5).map(p => `
                 <li class="ga-list-item">
                     <span class="ga-list-name" title="${p.page}">${p.page}</span>
                     <span class="ga-list-value">${p.sessions}</span>
@@ -1053,8 +1703,11 @@
             `).join('');
             document.getElementById('gaLandingPages').innerHTML = landingHtml || '<li class="ga-list-item">暂无数据</li>';
 
-            // 退出页
-            const exitHtml = (gaData.exit_pages || []).slice(0, 5).map(p => `
+            // 退出页（根据 tab 选择数据源）
+            const exitData = currentGATab === 'frontend' ? gaData.exit_pages_frontend
+                : currentGATab === 'backend' ? gaData.exit_pages_backend
+                : gaData.exit_pages;
+            const exitHtml = (exitData || []).slice(0, 5).map(p => `
                 <li class="ga-list-item">
                     <span class="ga-list-name" title="${p.page}">${p.page}</span>
                     <span class="ga-list-value">${p.sessions}</span>
@@ -1071,19 +1724,173 @@
             `).join('');
             document.getElementById('gaGeo').innerHTML = geoHtml || '<li class="ga-list-item">暂无数据</li>';
 
-            // 趋势图
-            renderGAChart();
+            // 渲染趋势图
+            switchChart(currentChartTab);
         }
 
-        // 渲染 GA 图表
-        function renderGAChart() {
-            if (gaChart) gaChart.destroy();
+        // 构建页面每日数据的查找表（根据当前 tab 选择数据源）
+        function buildPageDataMap() {
+            let pageTrend;
+            if (currentGATab === 'frontend') {
+                pageTrend = gaData.page_daily_trend_frontend;
+            } else if (currentGATab === 'backend') {
+                pageTrend = gaData.page_daily_trend_backend;
+            } else {
+                pageTrend = gaData.page_daily_trend;
+            }
+            if (!pageTrend || !pageTrend.data) return {};
 
-            const trend = gaData.daily_trend || [];
-            const labels = trend.map(d => d.date.slice(5)); // MM-DD
-            const pageViews = trend.map(d => d.page_views);
-            const users = trend.map(d => d.active_users);
-            const newUsers = trend.map(d => d.new_users || 0);
+            const map = {};  // date -> [{page, views}, ...]
+            for (const [page, dayData] of Object.entries(pageTrend.data)) {
+                for (const d of dayData) {
+                    if (!map[d.date]) map[d.date] = [];
+                    map[d.date].push({ page, views: d.views });
+                }
+            }
+            // 每天按浏览量排序
+            for (const date of Object.keys(map)) {
+                map[date].sort((a, b) => b.views - a.views);
+            }
+            return map;
+        }
+
+        // 根据数据点数量设置图表容器宽度，并滚到最右
+        const MIN_PX_PER_POINT = 50;
+        function fitChartWidth(dataLength) {
+            const scroll = document.getElementById('gaChartScroll');
+            const container = document.getElementById('gaChartContainer');
+            if (!scroll || !container) return;
+            const visibleWidth = scroll.clientWidth;
+            const needWidth = dataLength * MIN_PX_PER_POINT;
+            container.style.width = needWidth > visibleWidth ? needWidth + 'px' : '100%';
+            // 滚到最右显示最新数据，然后更新轴覆盖层
+            setTimeout(() => {
+                scroll.scrollLeft = scroll.scrollWidth;
+                updateAxisOverlays();
+            }, 150);
+        }
+
+        // 将 Y 轴区域复制到固定覆盖层，滚动时刻度不消失
+        function updateAxisOverlays() {
+            const leftCanvas = document.getElementById('yAxisOverlayLeft');
+            const rightCanvas = document.getElementById('yAxisOverlayRight');
+            if (!leftCanvas || !rightCanvas) return;
+
+            // 无图表或不需要滚动时隐藏覆盖层
+            if (!gaChart || !gaChart.chartArea) {
+                leftCanvas.style.display = 'none';
+                rightCanvas.style.display = 'none';
+                return;
+            }
+            const scroll = document.getElementById('gaChartScroll');
+            if (!scroll || scroll.scrollWidth <= scroll.clientWidth + 2) {
+                leftCanvas.style.display = 'none';
+                rightCanvas.style.display = 'none';
+                return;
+            }
+
+            const mainCanvas = gaChart.canvas;
+            const chartArea = gaChart.chartArea;
+            const dpr = window.devicePixelRatio || 1;
+            const cssHeight = mainCanvas.offsetHeight;
+
+            // 左 Y 轴覆盖层
+            const leftCssW = Math.ceil(chartArea.left);
+            const leftPxW = Math.ceil(leftCssW * dpr);
+            leftCanvas.width = leftPxW;
+            leftCanvas.height = mainCanvas.height;
+            leftCanvas.style.width = leftCssW + 'px';
+            leftCanvas.style.height = cssHeight + 'px';
+            leftCanvas.style.display = 'block';
+            leftCanvas.getContext('2d').drawImage(
+                mainCanvas, 0, 0, leftPxW, mainCanvas.height,
+                0, 0, leftPxW, mainCanvas.height
+            );
+
+            // 右 Y 轴覆盖层（仅双轴图表）
+            if (gaChart.scales.y1) {
+                const rightCssStart = Math.floor(chartArea.right);
+                const rightCssW = Math.ceil(mainCanvas.offsetWidth - rightCssStart);
+                const rightPxStart = Math.floor(rightCssStart * dpr);
+                const rightPxW = mainCanvas.width - rightPxStart;
+                rightCanvas.width = rightPxW;
+                rightCanvas.height = mainCanvas.height;
+                rightCanvas.style.width = rightCssW + 'px';
+                rightCanvas.style.height = cssHeight + 'px';
+                rightCanvas.style.display = 'block';
+                rightCanvas.getContext('2d').drawImage(
+                    mainCanvas, rightPxStart, 0, rightPxW, mainCanvas.height,
+                    0, 0, rightPxW, mainCanvas.height
+                );
+            } else {
+                rightCanvas.style.display = 'none';
+            }
+        }
+
+        // 当前图表 tab
+        let currentChartTab = 'pvuv';
+        let chartCollapsed = false;
+
+        function switchChart(tab) {
+            currentChartTab = tab;
+            // 更新 tab 样式
+            document.querySelectorAll('.chart-tab').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.chart === tab);
+            });
+            // 显示图表区域
+            const content = document.getElementById('chartContent');
+            if (content) content.style.display = chartCollapsed ? 'none' : '';
+            // 渲染对应图表
+            if (tab === 'pvuv') {
+                showingRegChart = false;
+                showingOrdersChart = false;
+                renderGAChart();
+                document.getElementById('gaPageDetail').style.display = '';
+            } else if (tab === 'reg') {
+                showingOrdersChart = false;
+                renderRegistrationChart();
+            } else if (tab === 'orders') {
+                showingRegChart = false;
+                renderOrdersChart();
+            }
+        }
+
+        // 是否正在显示注册人数图表
+        let showingRegChart = false;
+
+        // 渲染注册人数趋势图
+        function renderRegistrationChart() {
+            if (gaChart) gaChart.destroy();
+            showingRegChart = true;
+
+            const regData = gaData.real_registrations;
+            if (!regData || !regData.daily || regData.daily.length === 0) return;
+
+            const daily = regData.daily;
+            const labels = daily.map(d => d.date.slice(5));
+            const counts = daily.map(d => d.count);
+
+            // 内联插件：在柱状图顶部显示数字
+            const barLabelPlugin = {
+                id: 'barLabels',
+                afterDatasetsDraw(chart) {
+                    const { ctx } = chart;
+                    const barMeta = chart.getDatasetMeta(0);
+                    if (!barMeta || barMeta.hidden) return;
+                    ctx.save();
+                    ctx.font = 'bold 13px sans-serif';
+                    ctx.fillStyle = '#312e81';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+                    barMeta.data.forEach((bar, i) => {
+                        const value = counts[i];
+                        if (value > 0) {
+                            ctx.fillText(value, bar.x, bar.y - 6);
+                        }
+                    });
+                    ctx.restore();
+                }
+            };
 
             gaChart = new Chart(document.getElementById('gaChart'), {
                 type: 'bar',
@@ -1091,43 +1898,204 @@
                     labels: labels,
                     datasets: [
                         {
-                            type: 'line',
-                            label: '页面浏览',
-                            data: pageViews,
-                            borderColor: '#4f46e5',
-                            backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                            fill: true,
-                            tension: 0.3,
-                            yAxisID: 'y1',
-                            order: 0
-                        },
-                        {
-                            type: 'bar',
-                            label: '活跃用户',
-                            data: users,
-                            backgroundColor: 'rgba(16, 185, 129, 0.8)',
-                            borderRadius: 4,
-                            yAxisID: 'y',
-                            order: 1
-                        },
-                        {
-                            type: 'bar',
-                            label: '首次访问',
-                            data: newUsers,
-                            backgroundColor: 'rgba(245, 158, 11, 0.8)',
-                            borderRadius: 4,
-                            yAxisID: 'y',
-                            order: 2
+                            label: '每日注册',
+                            data: counts,
+                            backgroundColor: 'rgba(99, 102, 241, 0.7)',
+                            borderRadius: 4
                         }
                     ]
+                },
+                plugins: [barLabelPlugin],
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            enabled: true,
+                            callbacks: {
+                                title: function(items) {
+                                    const idx = items[0].dataIndex;
+                                    return daily[idx].date;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: '每日注册人数' }
+                        }
+                    }
+                }
+            });
+            fitChartWidth(labels.length);
+
+            // 隐藏页面详情面板
+            document.getElementById('gaPageDetail').style.display = 'none';
+        }
+
+        // 渲染 GA 图表
+        function renderGAChart() {
+            if (gaChart) gaChart.destroy();
+
+            let labels, fullDates, pageViews, users, newUsers, datasets;
+            const segmentedTrend = gaData.segmented_trend || [];
+
+            if (currentGATab === 'all') {
+                // 全部数据 - 显示用户和浏览
+                const trend = gaData.daily_trend || [];
+                labels = trend.map(d => d.date.slice(5));
+                fullDates = trend.map(d => d.date);
+                pageViews = trend.map(d => d.page_views);
+                users = trend.map(d => d.active_users);
+                newUsers = trend.map(d => d.new_users || 0);
+
+                datasets = [
+                    {
+                        type: 'line',
+                        label: 'PV (页面浏览)',
+                        data: pageViews,
+                        borderColor: '#4f46e5',
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        yAxisID: 'y1',
+                        order: 0
+                    },
+                    {
+                        type: 'bar',
+                        label: 'UV (独立访客)',
+                        data: users,
+                        backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                        borderRadius: 4,
+                        yAxisID: 'y',
+                        order: 1
+                    },
+                    {
+                        type: 'bar',
+                        label: '新访客',
+                        data: newUsers,
+                        backgroundColor: 'rgba(245, 158, 11, 0.8)',
+                        borderRadius: 4,
+                        yAxisID: 'y',
+                        order: 2
+                    }
+                ];
+            } else if (currentGATab === 'frontend') {
+                // 前台数据
+                labels = segmentedTrend.map(d => d.date.slice(5));
+                fullDates = segmentedTrend.map(d => d.date);
+                pageViews = segmentedTrend.map(d => d.frontend);
+                users = null;
+                newUsers = null;
+
+                datasets = [
+                    {
+                        type: 'line',
+                        label: '🌐 前台 PV',
+                        data: pageViews,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        yAxisID: 'y1'
+                    }
+                ];
+            } else {
+                // 后台数据
+                labels = segmentedTrend.map(d => d.date.slice(5));
+                fullDates = segmentedTrend.map(d => d.date);
+                pageViews = segmentedTrend.map(d => d.backend);
+                users = null;
+                newUsers = null;
+
+                datasets = [
+                    {
+                        type: 'line',
+                        label: '🔐 后台 PV',
+                        data: pageViews,
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        yAxisID: 'y1'
+                    }
+                ];
+            }
+
+            // 构建页面数据查找表
+            const pageDataMap = buildPageDataMap();
+
+            gaChart = new Chart(document.getElementById('gaChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: datasets
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
                     plugins: {
                         legend: {
                             position: 'top',
-                        }
+                        },
+                        tooltip: {
+                            enabled: false,
+                            external: function(context) {
+                                const panel = document.getElementById('gaPageDetail');
+                                const idx = context.tooltip.dataPoints?.[0]?.dataIndex;
+
+                                if (context.tooltip.opacity === 0 || idx === undefined) {
+                                    panel.innerHTML = '<div style="color:#999; text-align:center;">悬停图表查看详情</div>';
+                                    return;
+                                }
+
+                                const date = fullDates[idx];
+                                const totalViews = pageViews[idx];
+                                const pageData = pageDataMap[date] || [];
+
+                                let html = `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:10px;">
+                                    <span style="font-weight:bold; font-size:14px;">${labels[idx]}</span>
+                                    <div style="display:flex; gap:16px;">`;
+
+                                if (currentGATab === 'all' && users && newUsers) {
+                                    html += `<span><span style="color:#10b981;">●</span> UV: <b>${users[idx]}</b></span>
+                                        <span><span style="color:#f59e0b;">●</span> 新访客: <b>${newUsers[idx]}</b></span>`;
+                                }
+
+                                const colorDot = currentGATab === 'frontend' ? '#3b82f6' : currentGATab === 'backend' ? '#f59e0b' : '#4f46e5';
+                                const viewLabel = currentGATab === 'frontend' ? '前台 PV' : currentGATab === 'backend' ? '后台 PV' : 'PV';
+                                html += `<span><span style="color:${colorDot};">●</span> ${viewLabel}: <b>${totalViews}</b></span>
+                                    </div>
+                                </div>`;
+
+                                if (pageData.length > 0) {
+                                    html += '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:6px;">';
+                                    let detailSum = 0;
+                                    pageData.forEach(p => {
+                                        html += `<div style="display:flex; justify-content:space-between; padding:4px 8px; background:#fff; border-radius:4px;"><span style="color:#666; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.page}</span><span style="font-weight:500; margin-left:8px;">${p.views}</span></div>`;
+                                        detailSum += p.views;
+                                    });
+                                    const otherViews = totalViews - detailSum;
+                                    if (otherViews > 0) {
+                                        html += `<div style="display:flex; justify-content:space-between; padding:4px 8px; background:#fff; border-radius:4px;"><span style="color:#999;">其他页面</span><span style="font-weight:500; margin-left:8px;">${otherViews}</span></div>`;
+                                    }
+                                    html += '</div>';
+                                }
+
+                                panel.innerHTML = html;
+                            }
+                        },
+
                     },
                     scales: {
                         y: {
@@ -1136,7 +2104,7 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: '用户数'
+                                text: 'UV'
                             }
                         },
                         y1: {
@@ -1145,7 +2113,7 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: '浏览量'
+                                text: 'PV'
                             },
                             grid: {
                                 drawOnChartArea: false
@@ -1154,6 +2122,7 @@
                     }
                 }
             });
+            fitChartWidth(labels.length);
         }
 
         // 渲染热门内容
@@ -1210,6 +2179,453 @@
                 renderGA(); // 同时更新 GA 数据对比
             });
         });
+
+        // 渲染订单数据区域（含图表切换按钮）
+        function renderOrdersSection() {
+            const section = document.getElementById('ordersSection');
+            if (!section) return;
+            section.innerHTML = getOrdersSectionHtml();
+            // 同步更新 sticky tabs bar
+            const sticky = document.getElementById('chartTabsSticky');
+            if (sticky) {
+                const isAll = currentGATab === 'all';
+                if (isAll) {
+                    sticky.innerHTML = getChartTabsHtml();
+                    sticky.style.display = 'none'; // 默认隐藏，滚动后显示
+                    bindStickyChartTabEvents();
+                    // 监听原始 chartTabs 是否在视口内
+                    if (window._chartTabsObserver) window._chartTabsObserver.disconnect();
+                    const originalTabs = document.getElementById('chartTabs');
+                    if (originalTabs) {
+                        window._chartTabsObserver = new IntersectionObserver(([entry]) => {
+                            sticky.style.display = entry.isIntersecting ? 'none' : '';
+                        }, { threshold: 0 });
+                        window._chartTabsObserver.observe(originalTabs);
+                    }
+                } else {
+                    sticky.style.display = 'none';
+                    if (window._chartTabsObserver) window._chartTabsObserver.disconnect();
+                }
+            }
+            bindChartTabEvents();
+        }
+
+        function bindStickyChartTabEvents() {
+            const sticky = document.getElementById('chartTabsSticky');
+            if (!sticky) return;
+            sticky.querySelectorAll('.chart-tab').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (chartCollapsed) {
+                        chartCollapsed = false;
+                        const content = document.getElementById('chartContent');
+                        if (content) content.style.display = '';
+                        document.querySelectorAll('#chartCollapseBtn').forEach(b => b.textContent = '收起 ▲');
+                    }
+                    switchChart(this.dataset.chart);
+                });
+            });
+            sticky.querySelectorAll('#chartCollapseBtn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    chartCollapsed = !chartCollapsed;
+                    const content = document.getElementById('chartContent');
+                    if (content) content.style.display = chartCollapsed ? 'none' : '';
+                    document.querySelectorAll('#chartCollapseBtn').forEach(b => {
+                        b.textContent = chartCollapsed ? '展开 ▼' : '收起 ▲';
+                    });
+                });
+            });
+        }
+
+        // 绑定图表tab和收起按钮事件
+        function bindChartTabEvents() {
+            document.querySelectorAll('.chart-tab').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (chartCollapsed) {
+                        chartCollapsed = false;
+                        const content = document.getElementById('chartContent');
+                        if (content) content.style.display = '';
+                        const collapseBtn = document.getElementById('chartCollapseBtn');
+                        if (collapseBtn) collapseBtn.textContent = '收起 ▲';
+                    }
+                    switchChart(this.dataset.chart);
+                });
+            });
+            const collapseBtn = document.getElementById('chartCollapseBtn');
+            if (collapseBtn) {
+                collapseBtn.addEventListener('click', function() {
+                    chartCollapsed = !chartCollapsed;
+                    const content = document.getElementById('chartContent');
+                    if (content) content.style.display = chartCollapsed ? 'none' : '';
+                    this.textContent = chartCollapsed ? '展开 ▼' : '收起 ▲';
+                });
+            }
+        }
+
+        // 生成图表切换按钮 HTML
+        function getChartTabsHtml() {
+            const isAll = currentGATab === 'all';
+            const regStyle = isAll ? '' : 'display:none;';
+            const ordersStyle = isAll ? '' : 'display:none;';
+            return '<button class="chart-tab' + (currentChartTab === 'pvuv' ? ' active' : '') + '" data-chart="pvuv">PV/UV</button>' +
+                '<button class="chart-tab' + (currentChartTab === 'reg' ? ' active' : '') + '" data-chart="reg" style="' + regStyle + '">注册趋势</button>' +
+                '<button class="chart-tab' + (currentChartTab === 'orders' ? ' active' : '') + '" data-chart="orders" style="' + ordersStyle + '">下单趋势</button>' +
+                '<button id="chartCollapseBtn" style="background:none;border:1px solid #ddd;border-radius:6px;padding:4px 10px;font-size:12px;color:#666;cursor:pointer;">' +
+                    (chartCollapsed ? '展开 ▼' : '收起 ▲') +
+                '</button>';
+        }
+
+        // 生成订单横条 + 图表切换 HTML（5列grid，3:2对齐指标行）
+        function getOrdersSectionHtml() {
+            const isAll = currentGATab === 'all';
+            const hasOrders = isAll && platformData && platformData.orders && platformData.orders.length > 0;
+
+            // 前台/后台tab不显示订单和图表切换
+            if (!isAll) return '';
+
+            if (!hasOrders) {
+                return '<div class="orders-row">' +
+                    '<div style="grid-column:1/4;"></div>' +
+                    '<div class="chart-tabs-bar" id="chartTabs">' + getChartTabsHtml() + '</div>' +
+                '</div>';
+            }
+
+            const orders = platformData.orders;
+            const latest = orders[orders.length - 1];
+
+            let countChange = '', amountChange = '';
+            if (currentPeriod === 1 && orders.length >= 2) {
+                // vs 昨天：对比最后两条记录
+                const prev = orders[orders.length - 2];
+                countChange = formatOrderChange(latest.order_count - prev.order_count, false);
+                amountChange = formatOrderChange(latest.order_amount - prev.order_amount, true);
+            } else {
+                const targetDate = getDateDaysAgo(currentPeriod);
+                const oldRecord = orders.filter(o => o.date <= targetDate).pop();
+                if (oldRecord && oldRecord !== latest) {
+                    countChange = formatOrderChange(latest.order_count - oldRecord.order_count, false);
+                    amountChange = formatOrderChange(latest.order_amount - oldRecord.order_amount, true);
+                }
+            }
+
+            return '<div class="orders-row">' +
+                '<div class="orders-bar" id="ordersBar">' +
+                    '<div class="orders-bar-icon">&#x1F4E6;</div>' +
+                    '<div class="orders-bar-metrics">' +
+                        '<div class="orders-bar-metric">' +
+                            '<div class="orders-bar-value">' + latest.order_count.toLocaleString() + '</div>' +
+                            '<div class="orders-bar-label">累计订单</div>' +
+                        '</div>' +
+                        '<div class="orders-bar-metric">' +
+                            '<div class="orders-bar-change">' + (countChange || '<span style="color:#999">-</span>') + '</div>' +
+                            '<div class="orders-bar-label">新增</div>' +
+                        '</div>' +
+                        '<div class="orders-bar-divider"></div>' +
+                        '<div class="orders-bar-metric">' +
+                            '<div class="orders-bar-value">$' + latest.order_amount.toLocaleString() + '</div>' +
+                            '<div class="orders-bar-label">累计金额</div>' +
+                        '</div>' +
+                        '<div class="orders-bar-metric">' +
+                            '<div class="orders-bar-change">' + (amountChange || '<span style="color:#999">-</span>') + '</div>' +
+                            '<div class="orders-bar-label">新增</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="chart-tabs-bar" id="chartTabs">' + getChartTabsHtml() + '</div>' +
+            '</div>';
+        }
+
+        function formatOrderChange(diff, isMoney) {
+            if (diff === 0) return '<span class="change-zero">-</span>';
+            const cls = diff > 0 ? 'change-up' : 'change-down';
+            const sign = diff > 0 ? '+' : '-';
+            const val = isMoney ? '$' + Math.abs(diff).toLocaleString() : Math.abs(diff).toLocaleString();
+            return '<span class="' + cls + '">' + sign + val + '</span>';
+        }
+
+        // 是否正在显示订单图表
+        let showingOrdersChart = false;
+
+        // 渲染订单趋势图（双柱状图 + 滚动明细表）
+        function renderOrdersChart() {
+            if (gaChart) gaChart.destroy();
+            showingOrdersChart = true;
+
+            if (!platformData || !platformData.orders || platformData.orders.length === 0) return;
+
+            const orders = platformData.orders;
+            const labels = orders.map(o => o.date.slice(5));
+
+            // 计算每日增量
+            const dailyCounts = [];
+            const dailyAmounts = [];
+            for (let i = 0; i < orders.length; i++) {
+                if (i === 0) {
+                    dailyCounts.push(orders[i].order_count);
+                    dailyAmounts.push(orders[i].order_amount);
+                } else {
+                    dailyCounts.push(orders[i].order_count - orders[i - 1].order_count);
+                    dailyAmounts.push(orders[i].order_amount - orders[i - 1].order_amount);
+                }
+            }
+
+            gaChart = new Chart(document.getElementById('gaChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '新增订单',
+                            data: dailyCounts,
+                            backgroundColor: 'rgba(186, 101, 71, 0.7)',
+                            borderRadius: 4,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: '新增金额 ($)',
+                            data: dailyAmounts,
+                            backgroundColor: 'rgba(79, 70, 229, 0.6)',
+                            borderRadius: 4,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                title: function(items) {
+                                    return orders[items[0].dataIndex].date;
+                                },
+                                afterBody: function(items) {
+                                    const idx = items[0].dataIndex;
+                                    const o = orders[idx];
+                                    let tip = '\n累计: ' + o.order_count + ' 单 / $' + o.order_amount.toLocaleString();
+                                    if (o.new_users > 0) {
+                                        const conv = (dailyCounts[idx] / o.new_users * 100).toFixed(1);
+                                        tip += '\n新注册: ' + o.new_users + ' 人 | 转化率: ' + conv + '%';
+                                    }
+                                    return tip;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { type: 'linear', position: 'left', beginAtZero: true, title: { display: true, text: '订单数' } },
+                        y1: { type: 'linear', position: 'right', beginAtZero: true, title: { display: true, text: '金额 ($)' }, grid: { drawOnChartArea: false } }
+                    }
+                }
+            });
+            fitChartWidth(labels.length);
+
+            // 显示明细面板并填充滚动明细表
+            const panel = document.getElementById('gaPageDetail');
+            panel.style.display = '';
+            let tableHtml = '<div style="max-height:180px; overflow-y:auto;">' +
+                '<table style="width:100%; border-collapse:collapse; font-size:13px;">' +
+                '<thead style="position:sticky; top:0; background:#f8f9fa;">' +
+                '<tr style="border-bottom:2px solid #e5e7eb; text-align:right;">' +
+                '<th style="text-align:left; padding:6px 8px;">日期</th>' +
+                '<th style="padding:6px 8px; color:#6366f1;">新注册</th>' +
+                '<th style="padding:6px 8px; color:#ba6547;">新订单</th>' +
+                '<th style="padding:6px 8px; color:#4f46e5;">新金额</th>' +
+                '<th style="padding:6px 8px; color:#10b981;">转化率</th>' +
+                '<th style="padding:6px 8px;">累计注册</th>' +
+                '<th style="padding:6px 8px;">累计订单</th>' +
+                '<th style="padding:6px 8px;">累计金额</th>' +
+                '</tr></thead><tbody>';
+            for (let i = orders.length - 1; i >= 0; i--) {
+                const o = orders[i];
+                const dc = dailyCounts[i];
+                const da = dailyAmounts[i];
+                const nu = o.new_users || 0;
+                const cu = o.cumulative_users || 0;
+                const conv = nu > 0 ? (dc / nu * 100).toFixed(1) + '%' : '-';
+                const isZero = dc === 0 && da === 0 && nu === 0;
+                const rowStyle = isZero ? 'color:#ccc;' : '';
+                tableHtml += '<tr style="border-bottom:1px solid #f0f0f0; text-align:right;' + rowStyle + '">' +
+                    '<td style="text-align:left; padding:5px 8px;">' + o.date.slice(5) + '</td>' +
+                    '<td style="padding:5px 8px; font-weight:600; color:#6366f1;">' + (nu > 0 ? '+' + nu : '-') + '</td>' +
+                    '<td style="padding:5px 8px; font-weight:600; color:#ba6547;">' + (dc > 0 ? '+' + dc : '-') + '</td>' +
+                    '<td style="padding:5px 8px; font-weight:600; color:#4f46e5;">' + (da > 0 ? '+$' + da.toLocaleString() : '-') + '</td>' +
+                    '<td style="padding:5px 8px; color:#10b981; font-weight:600;">' + conv + '</td>' +
+                    '<td style="padding:5px 8px;">' + (cu > 0 ? cu : '-') + '</td>' +
+                    '<td style="padding:5px 8px;">' + o.order_count + '</td>' +
+                    '<td style="padding:5px 8px;">$' + o.order_amount.toLocaleString() + '</td>' +
+                '</tr>';
+            }
+            tableHtml += '</tbody></table></div>';
+            panel.innerHTML = tableHtml;
+        }
+
+        // 注册来源排序状态
+        let signupSourceSort = { field: 'orders', desc: true };
+        let signupSourcePeriod = 30; // 独立的时间周期
+
+        function bindSignupSourceTabs() {
+            document.querySelectorAll('.signup-source-tab').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    signupSourcePeriod = parseInt(this.dataset.days);
+                    // 更新 tab 样式
+                    document.querySelectorAll('.signup-source-tab').forEach(b => {
+                        b.style.background = '#fff';
+                        b.style.color = '#666';
+                        b.style.borderColor = '#e5e7eb';
+                    });
+                    this.style.background = '#4f46e5';
+                    this.style.color = '#fff';
+                    this.style.borderColor = '#4f46e5';
+                    renderSignupBySource();
+                });
+            });
+        }
+
+        // 渲染注册来源转化率排行
+        function renderSignupBySource() {
+            const container = document.getElementById('signupBySourceTable');
+            if (!container || !gaData) return;
+
+            const sourceData = signupSourcePeriod <= 1
+                ? gaData.signup_by_source_1d
+                : signupSourcePeriod <= 7
+                    ? gaData.signup_by_source_7d
+                    : gaData.signup_by_source_30d;
+
+            if (!sourceData || sourceData.length === 0) {
+                container.textContent = '暂无数据';
+                return;
+            }
+
+            const filtered = sourceData.filter(s =>
+                s.source !== '(not set)' &&
+                s.source !== 'footer' &&
+                s.source !== 'website' &&
+                s.source !== 'checkout.stripe.com'
+            );
+
+            // 排序
+            const sorted = [...filtered].sort((a, b) => {
+                const av = a[signupSourceSort.field] || 0;
+                const bv = b[signupSourceSort.field] || 0;
+                return signupSourceSort.desc ? bv - av : av - bv;
+            });
+
+            const table = document.createElement('table');
+            table.style.cssText = 'width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;';
+
+            const columns = [
+                { label: '来源', field: 'source', align: 'left' },
+                { label: '新访客', field: 'new_visitors', align: 'right' },
+                { label: '注册', field: 'signups', align: 'right' },
+                { label: '注册率', field: 'conversion_rate', align: 'right' },
+                { label: '下单', field: 'orders', align: 'right' },
+                { label: '下单率', field: 'order_rate', align: 'right' },
+            ];
+
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            headerRow.style.borderBottom = '2px solid #e5e7eb';
+            columns.forEach(col => {
+                const th = document.createElement('th');
+                th.style.cssText = 'padding:6px 8px;text-align:' + col.align + ';cursor:pointer;user-select:none;white-space:nowrap;';
+                const labelSpan = document.createElement('span');
+                labelSpan.textContent = col.label;
+                th.appendChild(labelSpan);
+                if (col.field !== 'source') {
+                    const arrow = document.createElement('span');
+                    arrow.style.cssText = 'margin-left:3px;font-size:11px;';
+                    if (signupSourceSort.field === col.field) {
+                        arrow.textContent = signupSourceSort.desc ? ' \u2193' : ' \u2191';
+                        arrow.style.color = '#4f46e5';
+                    } else {
+                        arrow.textContent = ' \u2195';
+                        arrow.style.color = '#ccc';
+                    }
+                    th.appendChild(arrow);
+                    th.onclick = () => {
+                        if (signupSourceSort.field === col.field) {
+                            signupSourceSort.desc = !signupSourceSort.desc;
+                        } else {
+                            signupSourceSort = { field: col.field, desc: true };
+                        }
+                        renderSignupBySource();
+                    };
+                    th.onmouseenter = () => th.style.background = '#f9fafb';
+                    th.onmouseleave = () => th.style.background = '';
+                }
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            function makeRateCell(rate, thresholdHigh, thresholdMid) {
+                const color = rate >= thresholdHigh ? '#10b981' : rate >= thresholdMid ? '#f59e0b' : '#6b7280';
+                const td = document.createElement('td');
+                td.style.cssText = 'padding:5px 8px;text-align:right;';
+                const wrap = document.createElement('div');
+                wrap.style.cssText = 'display:flex;align-items:center;justify-content:flex-end;gap:6px;';
+                const barBg = document.createElement('div');
+                barBg.style.cssText = 'width:40px;height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden;';
+                const barFill = document.createElement('div');
+                barFill.style.cssText = 'width:' + Math.min(rate, 100) + '%;height:100%;background:' + color + ';border-radius:3px;';
+                barBg.appendChild(barFill);
+                const text = document.createElement('span');
+                text.textContent = rate + '%';
+                text.style.cssText = 'color:' + color + ';font-weight:600;min-width:42px;';
+                wrap.appendChild(barBg);
+                wrap.appendChild(text);
+                td.appendChild(wrap);
+                return td;
+            }
+
+            const tbody = document.createElement('tbody');
+            sorted.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid #f3f4f6';
+
+                const tdSource = document.createElement('td');
+                tdSource.style.cssText = 'padding:5px 8px;font-weight:500;';
+                const sourceName = document.createElement('span');
+                sourceName.textContent = s.source;
+                tdSource.appendChild(sourceName);
+                if (s.source === '(direct)') {
+                    const hint = document.createElement('span');
+                    hint.textContent = ' 含搜索域名、书签、微信/飞书等App内打开';
+                    hint.style.cssText = 'font-size:11px;color:#999;font-weight:normal;';
+                    tdSource.appendChild(hint);
+                }
+
+                const tdVisitors = document.createElement('td');
+                tdVisitors.textContent = s.new_visitors;
+                tdVisitors.style.cssText = 'padding:5px 8px;text-align:right;';
+
+                const tdSignups = document.createElement('td');
+                tdSignups.textContent = s.signups;
+                tdSignups.style.cssText = 'padding:5px 8px;text-align:right;font-weight:600;color:#4f46e5;';
+
+                const tdRegRate = makeRateCell(s.conversion_rate, 40, 20);
+
+                const tdOrders = document.createElement('td');
+                tdOrders.textContent = s.orders || 0;
+                tdOrders.style.cssText = 'padding:5px 8px;text-align:right;font-weight:600;color:#ba6547;';
+
+                const tdOrderRate = makeRateCell(s.order_rate || 0, 30, 15);
+
+                tr.appendChild(tdSource);
+                tr.appendChild(tdVisitors);
+                tr.appendChild(tdSignups);
+                tr.appendChild(tdRegRate);
+                tr.appendChild(tdOrders);
+                tr.appendChild(tdOrderRate);
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+
+            container.replaceChildren(table);
+        }
 
         // 初始化
         loadPlatformData();

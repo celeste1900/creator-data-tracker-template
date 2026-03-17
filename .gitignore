@@ -16,6 +16,9 @@ data/ga_data.json
 # 浏览器数据（包含登录状态）
 data/browser_data/
 
+# 数据库备份
+data/backups/
+
 # CSV 文件（已迁移到 SQLite）
 data/*.csv
 
@@ -41,3 +44,9 @@ ENV/
 logs/
 .vercel
 .env*.local
+.venv/
+.claude/
+
+# 订单和注册数据（由后端推送）
+data/orders_data.json
+data/registration_data.json

@@ -1,42 +1,4 @@
 {
-  "updated_at": "2026-01-01 10:00:00",
-  "douyin": {
-    "account": {
-      "nickname": "示例账号",
-      "followers": 0,
-      "total_views": 0,
-      "total_likes": 0,
-      "total_comments": 0,
-      "total_shares": 0,
-      "total_collects": 0
-    },
-    "works": [],
-    "daily_stats": []
-  },
-  "xiaohongshu": {
-    "account": {
-      "nickname": "示例账号",
-      "followers": 0,
-      "total_views": 0,
-      "total_likes": 0,
-      "total_comments": 0,
-      "total_shares": 0,
-      "total_collects": 0
-    },
-    "works": [],
-    "daily_stats": []
-  },
-  "shipinhao": {
-    "account": {
-      "nickname": "示例账号",
-      "followers": 0,
-      "total_views": 0,
-      "total_likes": 0,
-      "total_comments": 0,
-      "total_shares": 0,
-      "total_collects": 0
-    },
-    "works": [],
-    "daily_stats": []
-  }
+  "updated_at": "",
+  "daily_snapshots": []
 }

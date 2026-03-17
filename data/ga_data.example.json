@@ -1,41 +1,13 @@
 {
-  "updated_at": "2026-01-01 10:00:00",
-  "realtime_users": 0,
-  "overview_7d": {
-    "active_users": 0,
-    "sessions": 0,
-    "page_views": 0,
-    "avg_session_duration": 0,
-    "bounce_rate": 0,
-    "new_users": 0
-  },
-  "overview_30d": {
-    "active_users": 0,
-    "sessions": 0,
-    "page_views": 0,
-    "avg_session_duration": 0,
-    "bounce_rate": 0,
-    "new_users": 0
-  },
-  "daily_trend": [],
-  "traffic_sources": [],
-  "top_pages": [],
-  "geo": [],
-  "devices": [],
-  "operating_systems": [],
-  "languages": [],
-  "landing_pages": [],
-  "exit_pages": [],
-  "signups_7d": {
-    "total": 0,
-    "users": 0,
-    "by_method": []
-  },
-  "signups_30d": {
-    "total": 0,
-    "users": 0,
-    "by_method": []
-  },
-  "signup_trend": [],
-  "history": []
+  "updated_at": "",
+  "overview_1d": {},
+  "overview_7d": {},
+  "overview_30d": {},
+  "traffic_sources_1d": [],
+  "traffic_sources_7d": [],
+  "traffic_sources_30d": [],
+  "real_registrations": {
+    "daily": [],
+    "recent_events": []
+  }
 }

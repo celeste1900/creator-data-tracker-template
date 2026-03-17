@@ -38,12 +38,13 @@ Claude 会自动引导你完成环境配置、Cookie 获取和首次数据采集
 
 ## 功能特性
 
-- **多平台支持**：抖音、小红书、视频号
-- **自动化采集**：定时采集账号数据和作品数据
+- **多平台支持**：抖音、小红书、视频号（含数据中心实时互动数据）
+- **自动化采集**：定时采集账号数据和作品数据，支持 macOS launchd 定时任务
 - **数据可视化**：仪表盘展示粉丝、播放、互动等核心指标
 - **趋势分析**：支持 vs 昨天、7天前、30天前 对比
-- **SQLite 存储**：高效本地存储，支持 SQL 查询
-- **GA 集成**：集成 Google Analytics 网站数据分析
+- **SQLite 存储**：高效本地存储，支持 SQL 查询和 CSV 导出
+- **GA 集成**：集成 Google Analytics 4 网站数据分析，支持多域名配置
+- **自动推送**：采集完成后自动 git push，支持 Vercel 自动部署
 
 ## 数据指标
 
@@ -134,7 +135,8 @@ python query_db.py --works
 
 ```
 creator-data-tracker/
-├── collect_all.py          # 主采集脚本
+├── collect_all.py          # 主采集脚本（抖音/小红书/视频号）
+├── collect_all_with_ga.py  # 带 GA 的完整采集脚本
 ├── query_db.py             # 数据库查询工具
 ├── index.html              # 数据仪表盘
 ├── config.json             # 配置文件（含 Cookie，不提交）
@@ -205,11 +207,41 @@ ORDER BY views DESC;
 
 配置步骤见 [操作手册 - GA配置](docs/操作手册.md#三google-analytics-配置)
 
+## Vercel 部署
+
+将仓库关联到 Vercel 即可自动部署仪表盘：
+
+1. 在 [Vercel](https://vercel.com) 导入你的 GitHub 仓库
+2. Framework Preset 选择 `Other`
+3. 部署完成后，每次 git push 都会自动更新仪表盘
+
+仪表盘访问需要输入 `config.json` 中的 `access_code`。
+
+## GA 多域名配置
+
+在 `scripts/collect_ga.py` 中配置 `ALLOWED_HOSTNAMES`、`FRONTEND_HOSTNAMES`、`BACKEND_HOSTNAMES` 以匹配你的域名：
+
+```python
+ALLOWED_HOSTNAMES = ['example.com', 'app.example.com']
+FRONTEND_HOSTNAMES = ['example.com']
+BACKEND_HOSTNAMES = ['app.example.com']
+```
+
+## 带 GA 的完整采集
+
+```bash
+# 同时采集平台数据 + GA 数据
+python collect_all_with_ga.py
+```
+
+此脚本会依次运行平台采集、GA 数据采集，并自动 git push。
+
 ## 注意事项
 
-1. **Cookie 有效期**：各平台 Cookie 会过期，视频号尤其容易失效
-2. **登录弹窗**：视频号 Cookie 失效时会弹出浏览器窗口扫码登录
+1. **Cookie 有效期**：各平台 Cookie 会过期，视频号尤其容易失效（约 4 天）
+2. **视频号扫码**：视频号 Cookie 失效时会弹出浏览器窗口扫码登录
 3. **数据安全**：`config.json` 和 `config/ga_credentials.json` 包含敏感信息，已加入 `.gitignore`
+4. **自动推送**：配置 `auto_push_to_github: true` 后，采集完成会自动 git push
 
 ## License
 

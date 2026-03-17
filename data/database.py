@@ -76,6 +76,17 @@ def init_db():
         )
     """)
 
+    # 每日订单数据表
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS daily_orders (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            date TEXT NOT NULL UNIQUE,
+            order_count INTEGER DEFAULT 0,
+            order_amount REAL DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
     # 创建索引
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_daily_date ON daily_accounts(date)")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_daily_platform ON daily_accounts(platform)")
@@ -88,11 +99,91 @@ def init_db():
 
 
 def save_daily_account(platform, account_data):
-    """保存每日账号数据"""
+    """保存每日账号数据（含异常数据校验 + 智能继承）
+
+    采集到部分数据时，真实部分保留，异常归零的字段从历史继承。
+    """
     today = datetime.now().strftime("%Y-%m-%d")
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     conn = get_connection()
     cursor = conn.cursor()
+
+    # 获取最近一条历史数据用于校验和继承
+    cursor.execute("""
+        SELECT account_name, account_id, avatar_url,
+               followers, total_views, total_likes, total_comments,
+               total_shares, total_collects, total_works
+        FROM daily_accounts WHERE platform = ?
+        ORDER BY date DESC LIMIT 1
+    """, (platform,))
+    prev = cursor.fetchone()
+
+    # 构建要写入的数据，先用采集到的新值
+    merged = {
+        "account_name": account_data.get("account_name", ""),
+        "account_id": account_data.get("account_id", ""),
+        "avatar_url": account_data.get("avatar_url", ""),
+        "followers": account_data.get("followers", 0),
+        "total_views": account_data.get("total_views", 0),
+        "total_likes": account_data.get("total_likes", 0),
+        "total_comments": account_data.get("total_comments", 0),
+        "total_shares": account_data.get("total_shares", 0),
+        "total_collects": account_data.get("total_collects", 0),
+        "total_works": account_data.get("total_works", 0),
+    }
+
+    if prev:
+        p_name, p_id, p_avatar, p_followers, p_views, p_likes, p_comments, p_shares, p_collects, p_works = prev
+
+        # 互动指标保护：累计值不应大幅回退
+        # 1) 归零 → 继承历史值
+        # 2) 下降超过 20% → 视为采集不完整，取历史值
+        inherit_fields = {
+            "total_works": p_works,
+            "total_views": p_views,
+            "total_likes": p_likes,
+            "total_comments": p_comments,
+            "total_shares": p_shares,
+            "total_collects": p_collects,
+        }
+        inherited = []
+        for field, old_val in inherit_fields.items():
+            new_val = merged[field]
+            if old_val > 0 and (new_val == 0 or new_val < old_val * 0.8):
+                merged[field] = old_val
+                inherited.append(f"{field}({new_val}→{old_val})")
+        if inherited:
+            print(f"⚠️ [{platform}] 数据异常回退，已从历史继承: {', '.join(inherited)}")
+
+        # 账号名/ID/头像：如果新值为空但历史有值，继承
+        if not merged["account_name"] and p_name:
+            merged["account_name"] = p_name
+        if not merged["account_id"] and p_id:
+            merged["account_id"] = p_id
+        if not merged["avatar_url"] and p_avatar:
+            merged["avatar_url"] = p_avatar
+
+    # 用 DB 中该平台全部作品重新算总量（API 单次可能不返回所有作品）
+    db_totals = cursor.execute("""
+        SELECT COUNT(*) as cnt,
+               COALESCE(SUM(views), 0) as views,
+               COALESCE(SUM(likes), 0) as likes,
+               COALESCE(SUM(comments), 0) as comments,
+               COALESCE(SUM(shares), 0) as shares,
+               COALESCE(SUM(collects), 0) as collects
+        FROM works WHERE platform = ?
+    """, (platform,)).fetchone()
+
+    if db_totals and db_totals[0] > 0:
+        db_works, db_views, db_likes, db_comments, db_shares, db_collects = db_totals
+        # 取 DB 全量作品加总和当前值的较大值
+        for field, db_val in [
+            ("total_works", db_works), ("total_views", db_views),
+            ("total_likes", db_likes), ("total_comments", db_comments),
+            ("total_shares", db_shares), ("total_collects", db_collects),
+        ]:
+            if db_val > merged[field]:
+                merged[field] = db_val
 
     cursor.execute("""
         INSERT OR REPLACE INTO daily_accounts
@@ -101,23 +192,16 @@ def save_daily_account(platform, account_data):
          total_shares, total_collects, total_works, created_at)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
-        today,
-        platform,
-        account_data.get("account_name", ""),
-        account_data.get("account_id", ""),
-        account_data.get("avatar_url", ""),
-        account_data.get("followers", 0),
-        account_data.get("total_views", 0),
-        account_data.get("total_likes", 0),
-        account_data.get("total_comments", 0),
-        account_data.get("total_shares", 0),
-        account_data.get("total_collects", 0),
-        account_data.get("total_works", 0),
-        now
+        today, platform,
+        merged["account_name"], merged["account_id"], merged["avatar_url"],
+        merged["followers"], merged["total_views"], merged["total_likes"],
+        merged["total_comments"], merged["total_shares"], merged["total_collects"],
+        merged["total_works"], now
     ))
 
     conn.commit()
     conn.close()
+    return True
 
 
 def save_works(platform, works_list):
@@ -179,6 +263,33 @@ def save_daily_ga(ga_data, target_date=None):
 
     conn.commit()
     conn.close()
+
+
+def save_daily_orders(date, order_count, order_amount):
+    """保存每日订单数据"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT OR REPLACE INTO daily_orders (date, order_count, order_amount, created_at)
+        VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+    """, (date, order_count, order_amount))
+    conn.commit()
+    conn.close()
+
+
+def get_orders_history(days=90):
+    """获取最近 N 天的订单历史数据"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cutoff = (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d")
+    cursor.execute("""
+        SELECT date, order_count, order_amount
+        FROM daily_orders WHERE date >= ?
+        ORDER BY date ASC
+    """, (cutoff,))
+    rows = [dict(r) for r in cursor.fetchall()]
+    conn.close()
+    return rows
 
 
 def get_ga_by_date(target_date):
@@ -323,7 +434,7 @@ def get_stats_summary():
 
     result = {}
 
-    for platform in ["douyin", "xiaohongshu", "shipinhao"]:
+    for platform in ["douyin", "xiaohongshu", "shipinhao", "gongzhonghao"]:
         # 获取今日数据
         cursor.execute("""
             SELECT * FROM daily_accounts
@@ -343,20 +454,11 @@ def get_stats_summary():
             current = dict(current)
             if previous:
                 previous = dict(previous)
-                # 计算变化（如果前一天数据为0，表示缺失，不计算变化）
-                def calc_change(field):
-                    prev_val = previous.get(field, 0)
-                    curr_val = current.get(field, 0)
-                    # 前一天为0可能是数据缺失，不显示变化
-                    if prev_val == 0 and curr_val > 0:
-                        return None  # 表示数据缺失，不是真正的变化
-                    return curr_val - prev_val
-
                 current["followers_change"] = current["followers"] - previous["followers"]
                 current["views_change"] = current["total_views"] - previous["total_views"]
                 current["likes_change"] = current["total_likes"] - previous["total_likes"]
-                current["comments_change"] = calc_change("total_comments")
-                current["shares_change"] = calc_change("total_shares")
+                current["comments_change"] = current["total_comments"] - previous["total_comments"]
+                current["shares_change"] = current["total_shares"] - previous["total_shares"]
                 current["collects_change"] = current["total_collects"] - previous["total_collects"]
                 current["works_change"] = current["total_works"] - previous["total_works"]
             else:
@@ -397,12 +499,6 @@ def export_for_frontend():
             by_platform[platform] = []
         by_platform[platform].append(row)
 
-    def calc_change(curr_val, prev_val, field):
-        """计算变化值，前一天为0时返回0（表示数据缺失）"""
-        if prev_val == 0 and curr_val > 0 and field in ["total_comments", "total_shares"]:
-            return 0
-        return curr_val - prev_val
-
     # 计算每日快照（带变化值）
     for platform, rows in by_platform.items():
         prev = None
@@ -417,9 +513,9 @@ def export_for_frontend():
                 "total_likes": row["total_likes"],
                 "likes_change": row["total_likes"] - (prev["total_likes"] if prev else 0),
                 "total_comments": row["total_comments"],
-                "comments_change": calc_change(row["total_comments"], prev["total_comments"] if prev else 0, "total_comments"),
+                "comments_change": row["total_comments"] - (prev["total_comments"] if prev else 0),
                 "total_shares": row["total_shares"],
-                "shares_change": calc_change(row["total_shares"], prev["total_shares"] if prev else 0, "total_shares"),
+                "shares_change": row["total_shares"] - (prev["total_shares"] if prev else 0),
                 "total_collects": row["total_collects"],
                 "collects_change": row["total_collects"] - (prev["total_collects"] if prev else 0),
                 "total_works": row["total_works"],
@@ -432,7 +528,7 @@ def export_for_frontend():
     data["daily_snapshots"].sort(key=lambda x: (x["date"], x["platform"]), reverse=True)
 
     # 一次性获取各平台最新数据
-    for platform in ["douyin", "xiaohongshu", "shipinhao"]:
+    for platform in ["douyin", "xiaohongshu", "shipinhao", "gongzhonghao"]:
         cursor.execute("""
             SELECT * FROM daily_accounts
             WHERE platform = ?
@@ -468,6 +564,15 @@ def export_for_frontend():
                 "works": works
             }
 
+    # 订单数据
+    cursor.execute("""
+        SELECT date, order_count, order_amount
+        FROM daily_orders WHERE date >= ?
+        ORDER BY date ASC
+    """, (cutoff,))
+    orders_rows = [dict(r) for r in cursor.fetchall()]
+    data["orders"] = orders_rows
+
     conn.close()
     return data
 
@@ -498,7 +603,7 @@ def migrate_from_json(json_data):
         ))
 
     # 迁移各平台数据
-    for platform in ["douyin", "xiaohongshu", "shipinhao"]:
+    for platform in ["douyin", "xiaohongshu", "shipinhao", "gongzhonghao"]:
         platform_data = json_data.get(platform, {})
 
         # 更新账号信息到最新记录
@@ -558,6 +663,26 @@ def cleanup_old_data(keep_days=90):
     conn.close()
 
     return deleted
+
+
+def backup_db(keep_days=7):
+    """备份数据库，保留最近 N 天的备份"""
+    import shutil
+    backup_dir = DB_PATH.parent / "backups"
+    backup_dir.mkdir(exist_ok=True)
+
+    today = datetime.now().strftime("%Y-%m-%d")
+    backup_path = backup_dir / f"tracker_{today}.db"
+
+    if not backup_path.exists() and DB_PATH.exists():
+        shutil.copy2(DB_PATH, backup_path)
+
+    # 清理旧备份
+    cutoff = (datetime.now() - timedelta(days=keep_days)).strftime("%Y-%m-%d")
+    for f in backup_dir.glob("tracker_*.db"):
+        date_str = f.stem.replace("tracker_", "")
+        if date_str < cutoff:
+            f.unlink()
 
 
 # 初始化数据库

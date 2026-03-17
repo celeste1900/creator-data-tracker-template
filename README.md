@@ -25,11 +25,11 @@
 
 ## 仪表盘页面组成
 
-### 1. 平台数据卡片（左侧）
+### 1. 平台运营数据（左侧）
 
 每个平台一张卡片：作品数、粉丝、播放、点赞、评论、分享、收藏、总互动。每个指标下方显示增量（vs 昨天/7天前/30天前可切换）。
 
-![平台数据卡片](assets/screenshot_platforms.png)
+![平台数据卡片](assets/screenshot_1.png)
 
 | 项目 | 说明 |
 |------|------|
@@ -40,19 +40,19 @@
 
 ### 2. 官网数据监测（右上）
 
-GA4 网站流量数据，三个 tab 切换展示不同维度：
+GA4 网站流量数据，三个 tab 切换展示不同维度。
 
-**「全部」tab** — 所有域名汇总：注册人数、UV、PV、会话数、平均时长
+**「全部」tab** — 所有域名汇总：注册人数、UV、PV、会话数、平均时长，以及订单收入栏、PV/UV 趋势图表
 
-![GA - 全部](assets/screenshot_ga_all.png)
+![官网数据监测 - 全部](assets/screenshot_2.png)
 
-**「前台官网」tab** — 前台网站的 UV/PV/会话 + TOP 3 页面
+**「前台官网」tab** — 前台网站的 UV/PV/会话 + TOP 3 页面 + 前台 PV 趋势
 
-![GA - 前台官网](assets/screenshot_ga_frontend.png)
+![官网数据监测 - 前台官网](assets/screenshot_3.png)
 
-**「后台系统」tab** — 后台应用的 UV/PV/会话 + TOP 3 页面
+**「后台系统」tab** — 后台应用的 UV/PV/会话 + TOP 3 页面 + 后台 PV 趋势
 
-![GA - 后台系统](assets/screenshot_ga_backend.png)
+![官网数据监测 - 后台系统](assets/screenshot_4.png)
 
 | 项目 | 说明 |
 |------|------|
@@ -61,34 +61,11 @@ GA4 网站流量数据，三个 tab 切换展示不同维度：
 | 域名配置 | 在 `collect_ga.py` 中设置 `ALLOWED_HOSTNAMES`、`FRONTEND_HOSTNAMES`、`BACKEND_HOSTNAMES` |
 | 自动化 | 全自动 |
 
-### 3. 订单与收入栏
+### 3. GA 流量明细与统计（下方）
 
-累计订单数、今日新增、累计金额（USD）。
+热门页面、流量来源、着陆页/退出页、注册来源转化率排行，以及设备类型、操作系统、语言、地理分布。
 
-![订单与收入](assets/screenshot_orders.png)
-
-| 项目 | 说明 |
-|------|------|
-| 数据文件 | `data/orders_data.json` |
-| 采集方式 | **不由采集脚本生成**，需要你自己把后台数据推送到仓库 |
-| 推送方式 | AI 机器人共创者 / 自写脚本调后台 API / 手动编辑 |
-| 不需要？ | 不创建这个文件，仪表盘自动隐藏此区域 |
-
-### 4. 趋势图表
-
-四个 tab 切换：PV/UV 趋势、注册趋势、下单趋势、收起。
-
-![趋势图表](assets/screenshot_chart.png)
-
-| Tab | 数据来源 |
-|-----|----------|
-| PV/UV | `ga_data.json` → `daily_trend` |
-| 注册趋势 | `registration_data.json` 或 `ga_data.json` → `signup_trend` |
-| 下单趋势 | `orders_data.json` → `daily` |
-
-### 5. 流量明细（下方表格）
-
-![流量明细表格](assets/screenshot_tables.png)
+![GA 流量明细与统计](assets/screenshot_5.png)
 
 | 表格 | 数据来源 |
 |------|----------|
@@ -97,10 +74,6 @@ GA4 网站流量数据，三个 tab 切换展示不同维度：
 | 着陆页 / 退出页 | `ga_data.json` → `landing_pages` / `exit_pages` |
 | 注册来源转化率 | `ga_data.json` → `signup_by_source_*` |
 | 设备 / 系统 / 语言 / 地理 | `ga_data.json` → `devices` / `operating_systems` / `languages` / `geo` |
-
-### 6. 底部统计（设备/系统/语言/地理）
-
-![底部统计](assets/screenshot_bottom.png)
 
 ---
 
